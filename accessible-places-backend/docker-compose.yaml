@@ -1,0 +1,13 @@
+version: '3'
+services:
+  database:
+    image: 'mongo'
+    container_name: 'dataset-mongo-container'
+    environment:
+      - MONGO_INITDB_DATABASE=dataset
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - ./mongo-volume:/data/db
+    ports:
+      - '27017-27019:27017-27019'
