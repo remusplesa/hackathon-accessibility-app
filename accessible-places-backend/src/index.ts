@@ -13,8 +13,11 @@ const startServer = async () => {
   app.use(helmet());
   config()
   
+  
   await connect(`${process.env.DATABASE_URL}`)
-  .then(() => console.log('Connected to MongoDB 🥌'));
+  .then(() => console.log('Connected to MongoDB 🥌'))
+  .catch((err) => console.error(`Could not connect to MongoDB => ${err}`));
+  
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({

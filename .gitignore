@@ -3,3 +3,4 @@
 */mongo-volume
 */node_modules
 */.env
+*/dist
