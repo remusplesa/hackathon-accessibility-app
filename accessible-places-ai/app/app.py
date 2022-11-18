@@ -40,4 +40,4 @@ if __name__ == "__main__":
 
 
 
-    app.run(host="0.0.0.0", port=opt.port)  # debug=True causes Restarting with stat
+    app.run(port=opt.port)  # debug=True causes Restarting with stat
