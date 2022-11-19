@@ -6,7 +6,8 @@ import { connect } from 'mongoose';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { PlaceResolver, UploadResolver } from './resolvers';
-
+import { AzureBlobConn } from './utils/connection.azure';
+import { BasicAuthCtx } from './utils/basicAuth';
 
 const startServer = async () => {
   const app = express();
@@ -23,7 +24,7 @@ const startServer = async () => {
     schema: await buildSchema({
       resolvers: [PlaceResolver, UploadResolver],
     }),
-    context: ({ req, res }) => ({ req, res }),
+    context: ({ req, res }) => ({ req, res, ...AzureBlobConn, ...BasicAuthCtx(req) }),
   });
 
   await apolloServer.start();
