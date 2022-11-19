@@ -4,6 +4,7 @@ import * as storage from '@azure/storage-blob';
 const accountname = process.env.AZURE_BLOB_ACCOUNT_NAME;
 const key = process.env.AZURE_BLOB_KEY;
 const containerName = process.env.AZURE_BLOB_CONTAINER;
+const linkTTL = process.env.AZURE_BLOB_SAS_TTL;
 
 const credentials = new storage.StorageSharedKeyCredential(accountname, key);
 const blobServiceClient = new storage.BlobServiceClient(
@@ -39,7 +40,7 @@ class UploadResolver {
           blobName: fileName,
           permissions: storage.BlobSASPermissions.parse('c'),
           startsOn: new Date(),
-          expiresOn: new Date(new Date().valueOf() + 3600),
+          expiresOn: new Date(new Date().valueOf() + linkTTL),
         },
         credentials
       )
