@@ -5,7 +5,7 @@ import { config } from 'dotenv';
 import { connect } from 'mongoose';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
-import { PlaceResolver } from './resolvers';
+import { PlaceResolver, UploadResolver } from './resolvers';
 
 
 const startServer = async () => {
@@ -21,7 +21,7 @@ const startServer = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [PlaceResolver],
+      resolvers: [PlaceResolver, UploadResolver],
     }),
     context: ({ req, res }) => ({ req, res }),
   });
