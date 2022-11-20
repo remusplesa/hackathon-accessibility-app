@@ -1,10 +1,11 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { ImageUpload } from "./components/ImageUpload/ImageUpload";
 
 function App() {
   return (
-    <ChakraProvider resetCSS>
+    <>
       <div>Accessible Places - Frontend</div>
-    </ChakraProvider>
+      <ImageUpload />
+    </>
   );
 }
 
