@@ -32,11 +32,15 @@ export function ImageUpload() {
     const response = await axios.put(imageUrl, bodyFormData, {
       headers: {
         "x-ms-blob-type": "BlockBlob",
+        "Content-Type": "image/jpeg",
       },
     });
 
     console.log("Azure responded with: ", response);
-    return response.status;
+    if (response.status === 201) {
+      return true;
+    }
+    return false;
   };
 
   useEffect(() => {
