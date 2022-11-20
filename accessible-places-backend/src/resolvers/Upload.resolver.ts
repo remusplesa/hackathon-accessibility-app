@@ -30,7 +30,7 @@ class UploadResolver {
         {
           containerName: context.containerName,
           blobName: fileName,
-          permissions: storage.BlobSASPermissions.parse('cw'),
+          permissions: storage.BlobSASPermissions.parse('cwr'),
           startsOn: new Date(),
           expiresOn: new Date(new Date().valueOf() + context.linkTTL),
         },
