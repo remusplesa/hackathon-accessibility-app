@@ -1,7 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  Input,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Button,
+} from "@chakra-ui/react";
+import { useUploadUrl } from "../../logic/hooks/useUploadUrl";
+import axios from "axios";
 
 export function ImageUpload() {
   const [selectedFile, setSelectedFile] = useState<any>();
+  const { getUploadUrl, loading, data, error } = useUploadUrl();
 
   const handleFileSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -9,17 +19,47 @@ export function ImageUpload() {
     }
   };
 
-  const uploadFileHandler = () => {};
+  const uploadFileHandler = () => {
+    getUploadUrl({ fileName: selectedFile.name });
+  };
+
+  const uploadToAzure = async (imageUrl: string) => {
+    // Create a body object that has form-data type
+    const bodyFormData = new FormData();
+    // Append the image key with the selectedFile value
+    bodyFormData.append("image", selectedFile);
+
+    const response = await axios.put(imageUrl, bodyFormData, {
+      headers: {
+        "x-ms-blob-type": "BlockBlob",
+      },
+    });
+
+    console.log("Azure responded with: ", response);
+    return response.status;
+  };
+
+  useEffect(() => {
+    if (!loading && data) {
+      // Check that this method works!
+      uploadToAzure(data);
+    }
+  }, [loading, data]);
 
   return (
     <div>
-      <label htmlFor="image-upload-input">Choose an image</label>
-      <input
-        type="file"
-        id="image-upload-input"
-        onChange={handleFileSelection}
-      />
-      <button onClick={uploadFileHandler}>Upload</button>
+      <FormControl>
+        <FormLabel htmlFor="image-upload-input">Choose an image</FormLabel>
+        <Input
+          type="file"
+          id="image-upload-input"
+          onChange={handleFileSelection}
+        />
+        <FormHelperText>*Size must not exceed 2MB</FormHelperText>
+      </FormControl>
+      <Button size="md" onClick={uploadFileHandler}>
+        Upload
+      </Button>
     </div>
   );
 }

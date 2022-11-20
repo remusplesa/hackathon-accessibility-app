@@ -4,19 +4,17 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 
 // Providers
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  gql,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 
 // Default stylesheet
 import "./index.css";
 
 const apolloClient = new ApolloClient({
-  uri: "http://localhost:4001/graphql",
+  uri: import.meta.env.VITE_BACKEND_GRAPHQL_URL,
+  headers: {
+    authorization: "Basic dXNlcjpleG9kZXY=",
+  },
   cache: new InMemoryCache(),
 });
 
