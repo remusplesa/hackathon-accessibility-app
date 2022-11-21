@@ -7,7 +7,27 @@ class PlaceResolver {
   async getAllPlaces(): Promise<PlaceResult[]> {
     const places = await PlaceModel.find();
 
-    console.log(JSON.stringify(places, null, 2))
+    return places;
+  }
+
+  @Query((returns) => [PlaceResult], { nullable: true })
+  async getPlaces(
+    @Arg('centerLat') centerLat: number,
+    @Arg('centerLon') centerLng: number,
+    @Arg('radiusInKM', {nullable: true}) radiusInKM: number = 0.01
+  ): Promise<PlaceResult[]> {
+    // 0.01 degrees ~= 1.1km
+    const latMin = centerLat - radiusInKM
+    const latMax = centerLat + radiusInKM
+    const lngMin = centerLng - radiusInKM
+    const lngMax = centerLng + radiusInKM
+
+    const places = await PlaceModel.find({
+      $and: [
+        {'coordinates.lat': {$gt: latMin, $lt: latMax}},
+        {'coordinates.lng': {$gt: lngMin, $lt: lngMax}},
+      ]
+    });
 
     return places;
   }
@@ -19,8 +39,6 @@ class PlaceResolver {
     const query = { _id: placeId};
     const places = await PlaceModel.findOne(query);
 
-    console.log(query, 'result:::::::', places);
-
     return places;
   }
 
@@ -28,8 +46,6 @@ class PlaceResolver {
   async addPlace(@Arg('options') options: Place) {
     const newPlace = new PlaceModel(options);
     newPlace.save();
-
-    console.log(JSON.stringify(newPlace, null, 2))
 
     return newPlace;
   }
@@ -41,9 +57,6 @@ class PlaceResolver {
     const updatedPlace = await PlaceModel.findOneAndUpdate(query, options, {
       upsert: true, new: true
     });
-
-    console.log(JSON.stringify(updatedPlace, null, 2))
-
 
     return updatedPlace;
   }

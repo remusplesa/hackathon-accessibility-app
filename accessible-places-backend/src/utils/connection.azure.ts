@@ -7,8 +7,6 @@ const key = process.env.AZURE_BLOB_KEY;
 const containerName = process.env.AZURE_BLOB_CONTAINER;
 const linkTTL = Number(process.env.AZURE_BLOB_SAS_TTL);
 
-console.log({accountname, key, containerName, linkTTL})
-
 const credentials = new storage.StorageSharedKeyCredential(accountname, key);
 const blobServiceClient = new storage.BlobServiceClient(
   `https://${accountname}.blob.core.windows.net`,

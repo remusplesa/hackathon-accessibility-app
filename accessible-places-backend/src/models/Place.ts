@@ -1,6 +1,7 @@
 import { prop, getModelForClass } from '@typegoose/typegoose';
 import { Field, ObjectType, InputType } from 'type-graphql';
 import { Coordinates } from './Coordinates';
+import { Detection } from './Detection';
 import { ManualAccesibilityItems } from './ManualAccesibilityItems';
 
 @InputType('PlaceInput')
@@ -25,6 +26,10 @@ export class Place {
   @Field(() => Coordinates, { nullable: false })
   @prop()
   coordinates!: Coordinates;
+
+  @Field(() => [Detection], { nullable: true })
+  @prop()
+  detections!: Detection;
 
   @Field(() => ManualAccesibilityItems, { nullable: true })
   @prop()
