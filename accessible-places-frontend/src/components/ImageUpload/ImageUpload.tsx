@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Input,
   FormControl,
@@ -11,6 +11,7 @@ import axios from "axios";
 
 export function ImageUpload() {
   const [selectedFile, setSelectedFile] = useState<any>();
+  const fileInputRef = useRef<any>(null);
   const { getUploadUrl, loading, data, error } = useUploadUrl();
 
   const handleFileSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,23 +25,31 @@ export function ImageUpload() {
   };
 
   const uploadToAzure = async (imageUrl: string) => {
-    // Create a body object that has form-data type
-    const bodyFormData = new FormData();
-    // Append the image key with the selectedFile value
-    bodyFormData.append("image", selectedFile);
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(fileInputRef.current.files[0]);
+    fileReader.onload = async () => {
+      console.log("Got the binary stirng: ", fileReader.result);
+      const MB = 10000;
+      const BloblFile = new Blob([fileReader.result!], {
+        type: fileInputRef.current.files[0].type,
+      });
+      const BlobName = fileInputRef.current.files[0].name;
+      if (BloblFile.size > MB) return new Error("File is too big!");
 
-    const response = await axios.put(imageUrl, bodyFormData, {
-      headers: {
-        "x-ms-blob-type": "BlockBlob",
-        "Content-Type": "image/jpeg",
-      },
-    });
+      const bodyFormData = new FormData();
+      bodyFormData.append("file", BloblFile, BlobName);
 
-    console.log("Azure responded with: ", response);
-    if (response.status === 201) {
-      return true;
-    }
-    return false;
+      console.log("Body form data:", bodyFormData);
+
+      const response = await axios.put(imageUrl, bodyFormData, {
+        headers: {
+          "x-ms-blob-type": "BlockBlob",
+          "Content-Type": "image/jpeg",
+        },
+      });
+
+      console.log("Azure responded with: ", response);
+    };
   };
 
   useEffect(() => {
@@ -58,6 +67,7 @@ export function ImageUpload() {
           type="file"
           id="image-upload-input"
           onChange={handleFileSelection}
+          ref={fileInputRef}
         />
         <FormHelperText>*Size must not exceed 2MB</FormHelperText>
       </FormControl>
