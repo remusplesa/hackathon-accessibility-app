@@ -3,6 +3,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
+// Routing
+import { BrowserRouter as Router } from "react-router-dom";
+
 // Providers
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -22,7 +25,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ChakraProvider resetCSS>
       <ApolloProvider client={apolloClient}>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </ApolloProvider>
     </ChakraProvider>
   </React.StrictMode>
