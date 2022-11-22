@@ -26,29 +26,31 @@ export function ImageUpload() {
 
   const uploadToAzure = async (imageUrl: string) => {
     const fileReader = new FileReader();
-    fileReader.readAsDataURL(fileInputRef.current.files[0]);
-    fileReader.onload = async () => {
-      console.log("Got the binary stirng: ", fileReader.result);
-      const MB = 10000;
-      const BloblFile = new Blob([fileReader.result!], {
-        type: fileInputRef.current.files[0].type,
-      });
-      const BlobName = fileInputRef.current.files[0].name;
-      if (BloblFile.size > MB) return new Error("File is too big!");
+    fileReader.readAsArrayBuffer(fileInputRef.current.files[0]);
 
-      const bodyFormData = new FormData();
-      bodyFormData.append("file", BloblFile, BlobName);
+    fileReader.onloadend = async (event) => {
+      const target = event.target;
+      if (target?.readyState == fileReader.DONE) {
+        var xhr = new XMLHttpRequest();
+        var requestData = new Uint8Array(target!.result as any);
 
-      console.log("Body form data:", bodyFormData);
+        xhr.open("PUT", imageUrl, true);
+        xhr.responseType = "blob";
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.setRequestHeader("X-File-Name", fileInputRef.current.files[0].name);
+        xhr.setRequestHeader("x-ms-blob-type", "BlockBlob");
+        xhr.setRequestHeader(
+          "Content-Type",
+          fileInputRef.current.files[0].type || "application/octet-stream"
+        );
+        xhr.setRequestHeader(
+          "x-ms-blob-content-type",
+          fileInputRef.current.files[0].type || "application/octet-stream"
+        );
+        xhr.setRequestHeader("x-ms-version", "2016-05-31");
 
-      const response = await axios.put(imageUrl, bodyFormData, {
-        headers: {
-          "x-ms-blob-type": "BlockBlob",
-          "Content-Type": "image/jpeg",
-        },
-      });
-
-      console.log("Azure responded with: ", response);
+        xhr.send(requestData);
+      }
     };
   };
 
