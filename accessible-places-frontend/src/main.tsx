@@ -12,6 +12,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 // Default stylesheet
 import "./index.css";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const apolloClient = new ApolloClient({
   uri: import.meta.env.VITE_BACKEND_GRAPHQL_URL,
