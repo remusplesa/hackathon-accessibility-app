@@ -14,7 +14,7 @@ import "./MapPage.styles.css";
 const CustomMarker = () => {
   const map = useMap();
   const [center, setCenter] = useState<LatLngExpression>([51.505, -0.09]);
-  const [radius, setRadius] = useState(1628.9091540817562);
+  const [radius] = useState(5000);
   const eventMap = useMapEvents({
     moveend: () => {
       console.log("MAP CENTER MOVED", map.getCenter());
@@ -29,7 +29,6 @@ const CustomMarker = () => {
 
   const handleFoundLocation = (event) => {
     const latLng = event.latlng || center;
-    const radius = event.accuracy || 1628.9091540817562;
     setCenter(latLng);
     const circleZone = circle(latLng, radius);
 
