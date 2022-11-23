@@ -1,28 +1,63 @@
-import React from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "react-leaflet";
+import { LatLngExpression, circle } from "leaflet";
+import React, { useEffect, useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  useMapEvents,
+  Circle,
+} from "react-leaflet";
 import "./MapPage.styles.css";
 
 const CustomMarker = () => {
   const map = useMap();
+  const [center, setCenter] = useState<LatLngExpression>([51.505, -0.09]);
+  const [radius, setRadius] = useState(1628.9091540817562);
   const eventMap = useMapEvents({
     moveend: () => {
-        console.log("MAP CENTER MOVED", map.getCenter());
-    }
-  })
+      console.log("MAP CENTER MOVED", map.getCenter());
+    },
+  });
+
+  useEffect(() => {
+    map.locate({ setView: true });
+
+    map.on("locationfound", handleFoundLocation);
+  }, []);
+
+  const handleFoundLocation = (event) => {
+    const latLng = event.latlng || center;
+    const radius = event.accuracy || 1628.9091540817562;
+    setCenter(latLng);
+    const circleZone = circle(latLng, radius);
+
+    circleZone.addTo(map);
+  };
+
+  useEffect(() => {
+    console.log("center", center);
+  }, [center]);
 
   return (
-    <Marker
-      position={[51.505, -0.09]}
-      eventHandlers={{
-        click: () => {
-          console.log("MAP CENTER", map.getCenter());
-        },
-      }}
-    >
-      <Popup>
-        A pretty CSS3 popup. <br /> Easily customizable.
-      </Popup>
-    </Marker>
+    <>
+      <Marker
+        position={center}
+        eventHandlers={{
+          click: () => {
+            console.log("MAP CENTER", map.getCenter());
+          },
+        }}
+      >
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+      <Circle
+      center={center}
+      radius={radius}/>
+    </>
   );
 };
 
@@ -38,7 +73,7 @@ export const MapPage = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <CustomMarker/>
+      <CustomMarker />
     </MapContainer>
   );
 };
