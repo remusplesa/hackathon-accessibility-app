@@ -1,14 +1,25 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import { Stage, Layer, Rect } from "react-konva";
+import { useEffect, useRef, useState } from "react";
+import { Stage, Layer, Rect, Image } from "react-konva";
+import { convertBase64, convertImageToCanvas } from "../../utils/utils";
 
-export function ShapeEditor() {
-  console.log("--- ooo daaa");
+export function ShapeEditor({ selectedFile }: Props) {
+  const image = convertImageToCanvas(selectedFile);
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight}>
-      <Layer>
-        <Rect width={50} height={50} fill="red" />
-      </Layer>
-    </Stage>
+    <>
+      {selectedFile && (
+        <>
+          <Stage width={window.innerWidth} height={window.innerHeight}>
+            <Layer>
+              <Image image={image} />
+              <Rect width={50} height={50} fill="red" />
+            </Layer>
+          </Stage>
+        </>
+      )}
+    </>
   );
 }
+
+type Props = {
+  selectedFile: string;
+};
