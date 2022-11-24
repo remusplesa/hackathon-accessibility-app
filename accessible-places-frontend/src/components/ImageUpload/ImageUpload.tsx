@@ -9,19 +9,18 @@ import {
 import { useUploadUrl } from "../../logic/hooks/useUploadUrl";
 import axios from "axios";
 
-export function ImageUpload() {
-  const [selectedFile, setSelectedFile] = useState<any>();
+export function ImageUpload({onSelect}: Props) {
   const fileInputRef = useRef<any>(null);
   const { getUploadUrl, loading, data, error } = useUploadUrl();
 
   const handleFileSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setSelectedFile(e.target.files[0]);
+      onSelect(e.target.files[0]);
     }
   };
 
   const uploadFileHandler = () => {
-    getUploadUrl({ fileName: selectedFile.name });
+    getUploadUrl({ fileName: fileInputRef.current.files[0].name });
   };
 
   const uploadToAzure = async (imageUrl: string) => {
@@ -78,4 +77,7 @@ export function ImageUpload() {
       </Button>
     </div>
   );
+}
+type Props = {
+  onSelect: (data:File) => void;
 }

@@ -17,6 +17,7 @@ import "./MapPage.styles.css";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { useSideDrawerContext } from "../../Context/SideDrawerContext/SideDrawerContext";
+import { ShapeEditor } from "../../components/ShapeEditor/ShapeEditor";
 
 const CustomMarker = ({ onOpen }) => {
   const map = useMap();
@@ -39,7 +40,6 @@ const CustomMarker = ({ onOpen }) => {
     const latLng = event.latlng || center;
     setCenter(latLng);
     const circleZone = circle(latLng, radius);
-
     circleZone.addTo(map);
   };
 
