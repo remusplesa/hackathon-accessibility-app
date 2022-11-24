@@ -27,11 +27,17 @@ export const RectangleShape = ({
         {...shapeProps}
         draggable
         onDragEnd={(e) => {
-          onChange({
-            ...shapeProps,
-            x: e.target.x(),
-            y: e.target.y(),
-          });
+          const node: any = shapeRef.current;
+          if (node) {
+            onChange({
+              ...shapeProps,
+              x: e.target.x(),
+              y: e.target.y(),
+              absolutePosition: node.absolutePosition(),
+              width: node.width(),
+              height: node.height(),
+            });
+          }
         }}
         onTransformEnd={(e) => {
           // transformer is changing scale of the node
@@ -42,7 +48,6 @@ export const RectangleShape = ({
           if (node) {
             const scaleX = node.scaleX();
             const scaleY = node.scaleY();
-
             // we will reset it back
             node.scaleX(1);
             node.scaleY(1);
@@ -50,6 +55,7 @@ export const RectangleShape = ({
               ...shapeProps,
               x: node.x(),
               y: node.y(),
+              absolutePosition: node.absolutePosition(),
               // set minimal value
               width: Math.max(5, node.width() * scaleX),
               height: Math.max(node.height() * scaleY),
