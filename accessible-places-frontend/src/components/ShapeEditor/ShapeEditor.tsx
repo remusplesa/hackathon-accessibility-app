@@ -11,7 +11,7 @@ export function ShapeEditor({ selectedFile }: Props) {
       y: 10,
       width: 100,
       height: 100,
-      stroke: "red",
+      stroke: "#83988b",
       strokeWidth: 2,
       id: "rect1",
     },
