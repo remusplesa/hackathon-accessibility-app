@@ -1,0 +1,17 @@
+<svg width="1000" height="1000" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame 1" clip-path="url(#clip0_201_9)">
+<rect width="1000" height="1000" fill="white"/>
+<g id="Image Upload Placeholder">
+<rect id="Placeholder Background" width="1000" height="1000" fill="#E3E3E3"/>
+<g id="Info Text">
+<text id="Supported: jpg,png,jpeg" fill="black" fill-opacity="0.75" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="48" letter-spacing="0em"><tspan x="249.953" y="568.406">Supported: jpg,png,jpeg</tspan></text>
+<text id="Upload an image" fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="96" letter-spacing="0em"><tspan x="140.938" y="483.812">Upload an image</tspan></text>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_201_9">
+<rect width="1000" height="1000" fill="white"/>
+</clipPath>
+</defs>
+</svg>
