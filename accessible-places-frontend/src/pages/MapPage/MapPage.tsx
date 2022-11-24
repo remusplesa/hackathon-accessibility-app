@@ -13,6 +13,7 @@ import "./MapPage.styles.css";
 
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
+import { ShapeEditor } from "../../components/ShapeEditor/ShapeEditor";
 
 const CustomMarker = () => {
   const map = useMap();
@@ -30,11 +31,10 @@ const CustomMarker = () => {
     map.on("locationfound", handleFoundLocation);
   }, []);
 
-  const handleFoundLocation = (event) => {
+  const handleFoundLocation = (event: any) => {
     const latLng = event.latlng || center;
     setCenter(latLng);
     const circleZone = circle(latLng, radius);
-
     circleZone.addTo(map);
   };
 
