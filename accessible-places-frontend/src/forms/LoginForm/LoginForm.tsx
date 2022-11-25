@@ -46,6 +46,7 @@ export default function LoginForm({ handleGithubLogin, isGithubLoginDisabled }: 
             aria-label="Github Login"
             size="lg"
             icon={<GitHubLogo />}
+            borderRadius={"18px"}
             disabled={isGithubLoginDisabled}
             onClick={handleGithubLogin}
           />

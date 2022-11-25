@@ -23,12 +23,10 @@ export const LoginPage = (props: any) => {
   };
 
   return (
-    <div>
-      <LoginForm
-        handleGithubLogin={signInWithGithub}
-        isGithubLoginDisabled={authing}
-      />
-    </div>
+    <LoginForm
+      handleGithubLogin={signInWithGithub}
+      isGithubLoginDisabled={authing}
+    />
   );
 };
 
