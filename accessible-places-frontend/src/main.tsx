@@ -10,6 +10,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AuthProvider } from "./components/AuthProvider";
+import theme from "./theme";
 
 const apolloClient = new ApolloClient({
   uri: import.meta.env.VITE_BACKEND_GRAPHQL_URL,
@@ -21,7 +22,7 @@ const apolloClient = new ApolloClient({
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <ChakraProvider resetCSS>
+    <ChakraProvider resetCSS theme={theme}>
       <AuthProvider>
         <ApolloProvider client={apolloClient}>
           <Router>

@@ -15,7 +15,7 @@ import { ReactComponent as GitHubLogo } from "../../assets/logo/github-icon-1.sv
 export default function LoginForm({ handleGithubLogin, isGithubLoginDisabled }: Props) {
   return (
     <Flex width="full" align="center" justifyContent="center">
-      <Box p={2}>
+      <Box p={2} border="2px solid white" borderRadius={"15px"} padding={"10"}>
         <Box textAlign="center">
           <Heading>Login</Heading>
         </Box>
@@ -41,15 +41,15 @@ export default function LoginForm({ handleGithubLogin, isGithubLoginDisabled }: 
           </Text>
           <Divider style={{ marginTop: "15px" }} />
         </Flex>
-        <Box my={1} textAlign="center">
-          <IconButton
+        <Box my={1} textAlign="center" paddingTop={"5"}>
+          <Button
             aria-label="Github Login"
             size="lg"
-            icon={<GitHubLogo />}
-            borderRadius={"18px"}
+            rightIcon={<GitHubLogo />}
             disabled={isGithubLoginDisabled}
             onClick={handleGithubLogin}
-          />
+            colorScheme="whiteAlpha"
+          >GitHub</Button>
         </Box>
       </Box>
     </Flex>

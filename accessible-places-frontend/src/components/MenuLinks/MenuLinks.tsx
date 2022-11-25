@@ -1,7 +1,7 @@
 import { Box, Button, Stack } from "@chakra-ui/react";
 import { MenuItem } from "../MenuItem/MenuItem";
 
-export const MenuLinks = ({ isOpen, loginHandler }: Props) => {
+export const MenuLinks = ({ isOpen }: Props) => {
   return (
     <Box
       display={{ base: isOpen ? "block" : "none", md: "block" }}
@@ -36,5 +36,4 @@ export const MenuLinks = ({ isOpen, loginHandler }: Props) => {
 
 type Props = {
   isOpen: boolean;
-  loginHandler: () => {};
 };
