@@ -1,22 +1,18 @@
-import { Routes, Route } from "react-router-dom";
-import { MapPage } from "./pages/MapPage/MapPage";
-import { LoginPage } from "./pages/LoginPage/LoginPage";
-import { UploadPage } from "./pages/UploadPage/UploadPage";
-
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import { Flex } from "@chakra-ui/react";
+import { AppRouter } from "./AppRouter";
+import { Header } from "./components/Header/Header";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/" element={<div>Accessible Places - Frontend</div>} />
-      <Route path="/upload" element={<PrivateRoute />}>
-        <Route path="/upload" element={<UploadPage />} />
-      </Route>
-      <Route path="/map" element={<PrivateRoute />}>
-        <Route path="/map" element={<MapPage />} />
-      </Route>
-    </Routes>
+    <Flex
+      direction="column"
+      align="center"
+      maxW={{ xl: "1200px" }}
+      m="0 auto"
+    >
+      <Header />
+      <AppRouter />
+    </Flex>
   );
 }
 
