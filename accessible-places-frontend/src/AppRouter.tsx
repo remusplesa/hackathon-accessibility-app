@@ -4,11 +4,9 @@ import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { UploadPage } from "./pages/UploadPage/UploadPage";
 
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import { SideDrawerContextProvider } from "./Context/SideDrawerContext/SideDrawerContext";
 
 export function AppRouter() {
   return (
-    <SideDrawerContextProvider>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<div>Accessible Places - Frontend</div>} />
@@ -19,6 +17,5 @@ export function AppRouter() {
           <Route path="/map" element={<MapPage />} />
         </Route>
       </Routes>
-    </SideDrawerContextProvider>
   );
 }
