@@ -21,14 +21,14 @@ const apolloClient = new ApolloClient({
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <AuthProvider>
-      <ChakraProvider resetCSS>
+    <ChakraProvider resetCSS>
+      <AuthProvider>
         <ApolloProvider client={apolloClient}>
           <Router>
             <App />
           </Router>
         </ApolloProvider>
-      </ChakraProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </ChakraProvider>
   </React.StrictMode>
 );
