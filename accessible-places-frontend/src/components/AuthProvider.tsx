@@ -8,7 +8,6 @@ export const AuthProvider = ({ children }: any) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
-    console.log("Rendered auth provider");
     auth.onAuthStateChanged(setCurrentUser);
   }, []);
 
