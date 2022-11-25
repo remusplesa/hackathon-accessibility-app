@@ -1,5 +1,6 @@
 import { LatLngExpression, circle } from "leaflet";
 import React, { useEffect, useState } from "react";
+import { SideDrawer } from "../../components/SideDrawer/SideDrawer";
 import {
   MapContainer,
   TileLayer,
@@ -8,17 +9,21 @@ import {
   useMap,
   useMapEvents,
   Circle,
+  Tooltip,
 } from "react-leaflet";
+import { useDisclosure } from "@chakra-ui/react";
 import "./MapPage.styles.css";
 
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
+import { useSideDrawerContext } from "../../Context/SideDrawerContext/SideDrawerContext";
 import { ShapeEditor } from "../../components/ShapeEditor/ShapeEditor";
 
-const CustomMarker = () => {
+const CustomMarker = ({ onOpen }) => {
   const map = useMap();
   const [center, setCenter] = useState<LatLngExpression>([51.505, -0.09]);
-  const [radius] = useState(5000);
+  const [radius] = useState(500);
+
   const eventMap = useMapEvents({
     moveend: () => {
       console.log("MAP CENTER MOVED", map.getCenter());
@@ -48,13 +53,14 @@ const CustomMarker = () => {
         position={center}
         eventHandlers={{
           click: () => {
+            onOpen();
             console.log("MAP CENTER", map.getCenter());
           },
         }}
       >
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
+        <Tooltip direction="top" offset={[-15, -12]} opacity={1}>
+          Top tooltip
+        </Tooltip>
       </Marker>
       <Circle center={center} radius={radius} />
     </>
@@ -62,6 +68,8 @@ const CustomMarker = () => {
 };
 
 export const MapPage = () => {
+  const { onOpen } = useSideDrawerContext();
+
   return (
     <>
       <MapContainer
@@ -74,9 +82,9 @@ export const MapPage = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <CustomMarker />
+        <CustomMarker onOpen={onOpen} />
       </MapContainer>
-      <button onClick={() => signOut(auth)}>Sign Out!</button>
+      <SideDrawer />
     </>
   );
 };

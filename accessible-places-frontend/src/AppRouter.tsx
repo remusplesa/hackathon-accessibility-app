@@ -7,15 +7,15 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 export function AppRouter() {
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/" element={<div>Accessible Places - Frontend</div>} />
-      <Route path="/upload" element={<PrivateRoute />}>
-        <Route path="/upload" element={<UploadPage />} />
-      </Route>
-      <Route path="/map" element={<PrivateRoute />}>
-        <Route path="/map" element={<MapPage />} />
-      </Route>
-    </Routes>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<div>Accessible Places - Frontend</div>} />
+        <Route path="/upload" element={<PrivateRoute />}>
+          <Route path="/upload" element={<UploadPage />} />
+        </Route>
+        <Route path="/map" element={<PrivateRoute />}>
+          <Route path="/map" element={<MapPage />} />
+        </Route>
+      </Routes>
   );
 }
