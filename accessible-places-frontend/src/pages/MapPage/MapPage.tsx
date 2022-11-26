@@ -1,90 +1,138 @@
 import { LatLngExpression, circle } from "leaflet";
-import React, { useEffect, useState } from "react";
-import { SideDrawer } from "../../components/SideDrawer/SideDrawer";
+import { memo, useCallback, useEffect, useState } from "react";
 import {
   MapContainer,
   TileLayer,
   Marker,
-  Popup,
   useMap,
   useMapEvents,
-  Circle,
   Tooltip,
 } from "react-leaflet";
-import { useDisclosure } from "@chakra-ui/react";
+import _ from "lodash";
+
+import { SideDrawer } from "../../components/SideDrawer/SideDrawer";
+import { MyLocationPin } from "../../components/MyLocationPin/MyLocationPin";
+import { useSideDrawerContext } from "../../Context/SideDrawerContext/SideDrawerContext";
+import { usePlaces } from "../../logic/hooks/usePlaces";
+import { Place } from "../../types";
 import "./MapPage.styles.css";
 
-import { auth } from "../../firebase";
-import { signOut } from "firebase/auth";
-import { useSideDrawerContext } from "../../Context/SideDrawerContext/SideDrawerContext";
-import { ShapeEditor } from "../../components/ShapeEditor/ShapeEditor";
-
-const CustomMarker = ({ onOpen }) => {
+const MapLocationMarker = ({ onOpen, setCenter }: any) => {
   const map = useMap();
-  const [center, setCenter] = useState<LatLngExpression>([51.505, -0.09]);
-  const [radius] = useState(500);
+  const [myLocation, setMyLocation] = useState<LatLngExpression>([0, 0]);
 
   const eventMap = useMapEvents({
     moveend: () => {
       console.log("MAP CENTER MOVED", map.getCenter());
+      setCenter(map.getCenter())
     },
   });
 
   useEffect(() => {
     map.locate({ setView: true });
-
     map.on("locationfound", handleFoundLocation);
   }, []);
 
   const handleFoundLocation = (event: any) => {
-    const latLng = event.latlng || center;
-    setCenter(latLng);
-    const circleZone = circle(latLng, radius);
-    circleZone.addTo(map);
+    const latLng = event.latlng ;
+    setMyLocation(latLng);
   };
-
-  useEffect(() => {
-    console.log("center", center);
-  }, [center]);
 
   return (
     <>
       <Marker
-        position={center}
+        icon={MyLocationPin}
+        position={myLocation}
         eventHandlers={{
           click: () => {
             onOpen();
-            console.log("MAP CENTER", map.getCenter());
           },
         }}
       >
         <Tooltip direction="top" offset={[-15, -12]} opacity={1}>
-          Top tooltip
+          My location
         </Tooltip>
       </Marker>
-      <Circle center={center} radius={radius} />
     </>
   );
 };
 
-export const MapPage = () => {
+const AddNewPlaceHandler = () => {
+  const map = useMapEvents({
+    dblclick(e) {
+      alert(`Add place @ ${e.latlng}`);
+    },
+  });
+  return null;
+};
+
+const PlaceMarker = memo(({ place, onOpen, select }: PlaceMarkerProps) => {
+  return (
+    <>
+      <Marker
+        position={place.coordinates}
+        eventHandlers={{
+          click: () => {
+            onOpen();
+            select(place);
+          },
+        }}
+      >
+        <Tooltip direction="top" offset={[-15, -12]} opacity={1}>
+          {place.poiName}
+        </Tooltip>
+      </Marker>
+    </>
+  );
+});
+
+export const MapPage = memo(() => {
   const { onOpen } = useSideDrawerContext();
+  const [selected, setSelected] = useState<Place>();
+  const [center, setCenter] = useState<{lat: number; lng:number}>();
+  const {getPlaces, data, loading, error } = usePlaces()
+  const debouncer = useCallback(_.debounce(getPlaces, 1000), []);
+
+  useEffect(() => {
+    debouncer({
+      centerLat: center?.lat ?? 0,
+      centerLng: center?.lng ?? 0,
+      mocked: true,
+    })
+  }, [center])
 
   return (
     <>
       <MapContainer
         center={[51.505, -0.09]}
         zoom={13}
+        minZoom={12}
         scrollWheelZoom={false}
         className="map-container"
       >
         <TileLayer
+          className="map-tiles"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <CustomMarker onOpen={onOpen} />
+        {data?.getPlaces?.map((place) => (
+          <PlaceMarker
+            key={place._id}
+            onOpen={onOpen}
+            select={setSelected}
+            place={place}
+          />
+        ))}
+        <MapLocationMarker onOpen={onOpen} setCenter={setCenter} />
+        <AddNewPlaceHandler />
       </MapContainer>
-      <SideDrawer />
+      {selected && <SideDrawer {...selected} />}
     </>
   );
+});
+
+type PlaceMarkerProps = {
+  place: Place;
+  onOpen: () => void;
+  select: (e: any) => void;
 };

@@ -7,12 +7,18 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  Input,
+  Box,
   Button,
+  Image,
+  Heading,
+  Stack,
+  Text
 } from "@chakra-ui/react";
+import { CheckIcon, WarningIcon } from '@chakra-ui/icons'
 import { useSideDrawerContext } from "../../Context/SideDrawerContext/SideDrawerContext";
+import { Place } from "../../types";
 
-export const SideDrawer = () => {
+export const SideDrawer = (props: SideDrawerProps) => {
   const { isOpen, onClose } = useSideDrawerContext();
 
   console.log(isOpen);
@@ -22,10 +28,30 @@ export const SideDrawer = () => {
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
-        <DrawerHeader>Create your account</DrawerHeader>
+        <DrawerHeader>
+
+        </DrawerHeader>
 
         <DrawerBody>
-          <Input disabled value={"da"} />
+          <Stack spacing="2rem">
+            <Heading as="h2" bgColor={"gray.800"} p={4} mt={2} borderRadius="lg">
+              {props.poiName ?? "Name here"}
+            </Heading>
+            {props.isAccessible ?
+              <Box>Is Accessible <CheckIcon /></Box> :
+              <Box>Not Accessible <WarningIcon /></Box>}
+            <Text>
+              Coordinates [lat: {props.coordinates?.lat}, lng:{" "}
+              {props.coordinates?.lng}]
+            </Text>
+            <Image
+              objectFit={"cover"}
+              h={"20rem"}
+              borderRadius="lg"
+              src={props.photoUrl}
+              alt="place-photo"
+            />
+          </Stack>
         </DrawerBody>
 
         <DrawerFooter>
@@ -38,3 +64,5 @@ export const SideDrawer = () => {
     </Drawer>
   );
 };
+
+type SideDrawerProps = Place;
