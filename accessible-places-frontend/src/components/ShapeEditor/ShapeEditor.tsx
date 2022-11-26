@@ -1,23 +1,18 @@
-import { useState } from "react";
+import { Card, CardHeader, CardBody, Stack, Heading, Text, Box, Flex } from "@chakra-ui/react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Stage, Layer, Rect, Image } from "react-konva";
-import { convertImageToCanvas } from "../../utils/utils";
+import { PredictionContext } from "../../Context/PredictionContext/PredictionContext";
+import { IRectangles, PredictionContextType, RAMP_COLOR, STAIRS_COLOR } from "../../utils/models";
+import { convertCoortinatesToCanvas, convertImageToCanvas } from "../../utils/utils";
 import { RectangleShape } from "../RectangleShape/RectangleShape";
 
+
+
 export function ShapeEditor({ selectedFile }: Props) {
-  const image = convertImageToCanvas(selectedFile);
-  const rectProps = [
-    {
-      x: 10,
-      y: 10,
-      width: 100,
-      height: 100,
-      stroke: "#83988b",
-      strokeWidth: 2,
-      id: "rect1",
-    },
-  ];
+  const { predictions } = useContext(PredictionContext) as PredictionContextType
+
   const [selectedId, selectShape] = useState<any>(null);
-  const [rectangles, setRectangles] = useState<any>(rectProps);
+  const [rectangles, setRectangles] = useState<IRectangles[] | undefined>();
 
   const checkDeselect = (e: any) => {
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -26,41 +21,54 @@ export function ShapeEditor({ selectedFile }: Props) {
     }
   };
 
+  const getRectangles = () => {
+    const rect = predictions?.map(prediction => {
+      return convertCoortinatesToCanvas(prediction)
+    })
+    setRectangles(rect)
+  }
+
+  useEffect(() => {
+    selectedFile && getRectangles()
+  }, [predictions])
+
+
+
   return (
     <>
-      {image && (
-        <>
-          <Stage
-            width={Number(image.width)}
-            height={Number(image.height)}
-            onMouseDown={checkDeselect}
-            onTouchStart={checkDeselect}
-          >
-            <Layer>
-              <Image image={image} />
-              {rectangles.map((rect: any, i: number) => (
-                <RectangleShape
-                  key="positionRect"
-                  shapeProps={rect}
-                  isSelected={rect.id === selectedId}
-                  onSelect={() => {
-                    selectShape(rect.id);
-                  }}
-                  onChange={(newAttrs) => {
-                    const rects = rectangles.slice();
-                    rects[i] = newAttrs;
-                    setRectangles(rects);
-                  }}
-                />
-              ))}
-            </Layer>
-          </Stage>
-        </>
+      {selectedFile && (
+
+        <Stage
+          width={Number(selectedFile.width) > 539 ? 539 : Number(selectedFile.width)}
+          height={Number(selectedFile.height)}
+          onMouseDown={checkDeselect}
+          onTouchStart={checkDeselect}
+        >
+          <Layer>
+            <Image image={selectedFile} />
+            {rectangles?.map((rect, i: number) => (
+              <RectangleShape
+                key={`positionRect_${rect.id}_${i}`}
+                shapeProps={rect}
+                isSelected={rect.id === selectedId}
+                onSelect={() => {
+                  selectShape(rect.id);
+                }}
+                onChange={(newAttrs) => {
+                  const rects = rectangles.slice();
+                  rects[i] = newAttrs;
+                  setRectangles(rects);
+                }}
+              />
+            ))}
+          </Layer>
+        </Stage>
+
       )}
     </>
   );
 }
 
 type Props = {
-  selectedFile: string;
+  selectedFile: CanvasImageSource;
 };
