@@ -1,0 +1,7 @@
+.display-item {
+  transition: all 0.5s;
+}
+
+.inactive {
+  display: none;
+}
