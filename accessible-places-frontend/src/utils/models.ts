@@ -25,3 +25,18 @@ export interface IRectangles {
 
 export const RAMP_COLOR = '#48BB78'
 export const STAIRS_COLOR = '#C53030'
+
+export type Place = {
+    _id: string;
+    poiName: string;
+    isAccessible: boolean;
+    photoUrl: string;
+    accesibilityDetails?: {
+        parking: boolean;
+        elevator: boolean;
+    }
+    coordinates: {
+        lat: number;
+        lng: number;
+    }
+}

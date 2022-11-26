@@ -1,6 +1,6 @@
 import { gql, ApolloError, useLazyQuery } from "@apollo/client";
 import { handleApolloError } from "../helpers/handleApolloError";
-import { Place } from "../../types";
+import { Place } from "../../utils/models";
 
 const GET_PLACES = gql`
   query GET_PLACES($centerLat: Float!, $centerLng: Float!, $mocked: Boolean) {

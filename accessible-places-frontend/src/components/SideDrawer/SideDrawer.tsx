@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons'
 import { useSideDrawerContext } from "../../Context/SideDrawerContext/SideDrawerContext";
-import { Place } from "../../types";
+import { Place } from "../../utils/models";
 
 export const SideDrawer = (props: SideDrawerProps) => {
   const { isOpen, onClose } = useSideDrawerContext();

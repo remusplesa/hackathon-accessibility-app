@@ -14,7 +14,7 @@ import { SideDrawer } from "../../components/SideDrawer/SideDrawer";
 import { MyLocationPin } from "../../components/MyLocationPin/MyLocationPin";
 import { useSideDrawerContext } from "../../Context/SideDrawerContext/SideDrawerContext";
 import { usePlaces } from "../../logic/hooks/usePlaces";
-import { Place } from "../../types";
+import { Place } from "../../utils/models";
 import "./MapPage.styles.css";
 
 const MapLocationMarker = ({ onOpen, setCenter }: any) => {
