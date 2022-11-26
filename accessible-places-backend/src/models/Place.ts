@@ -13,7 +13,7 @@ export class Place {
 
   @Field()
   @prop({ required: true })
-  isAccesible!: boolean;
+  isAccessible!: boolean;
 
   @Field()
   @prop()
