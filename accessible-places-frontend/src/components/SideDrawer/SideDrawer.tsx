@@ -21,8 +21,6 @@ import { Place } from "../../utils/models";
 export const SideDrawer = (props: SideDrawerProps) => {
   const { isOpen, onClose } = useSideDrawerContext();
 
-  console.log(isOpen);
-
   return (
     <Drawer size="md" isOpen={isOpen} placement="right" onClose={onClose}>
       <DrawerOverlay />

@@ -34,7 +34,7 @@ const MapLocationMarker = ({ onOpen, setCenter }: any) => {
   }, []);
 
   const handleFoundLocation = (event: any) => {
-    const latLng = event.latlng ;
+    const latLng = event.latlng;
     setMyLocation(latLng);
   };
 
@@ -89,8 +89,8 @@ const PlaceMarker = memo(({ place, onOpen, select }: PlaceMarkerProps) => {
 export const MapPage = memo(() => {
   const { onOpen } = useSideDrawerContext();
   const [selected, setSelected] = useState<Place>();
-  const [center, setCenter] = useState<{lat: number; lng:number}>();
-  const {getPlaces, data, loading, error } = usePlaces()
+  const [center, setCenter] = useState<{ lat: number; lng: number }>();
+  const { getPlaces, data, loading, error } = usePlaces()
   const debouncer = useCallback(_.debounce(getPlaces, 1000), []);
 
   useEffect(() => {
@@ -117,7 +117,7 @@ export const MapPage = memo(() => {
         />
         {data?.getPlaces?.map((place) => (
           <PlaceMarker
-            key={place._id}
+            key={`place-marker-${place._id ?? Math.random() * 100}`}
             onOpen={onOpen}
             select={setSelected}
             place={place}
