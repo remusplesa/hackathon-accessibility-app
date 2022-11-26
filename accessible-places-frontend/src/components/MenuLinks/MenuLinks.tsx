@@ -36,5 +36,5 @@ export const MenuLinks = ({ isOpen, loginHandler }: Props) => {
 
 type Props = {
   isOpen: boolean;
-  loginHandler: () => {};
+  loginHandler?: () => {};
 };
