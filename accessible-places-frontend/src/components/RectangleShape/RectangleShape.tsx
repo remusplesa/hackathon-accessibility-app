@@ -1,3 +1,4 @@
+import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 import { Rect, Transformer } from "react-konva";
 
@@ -63,6 +64,7 @@ export const RectangleShape = ({
           }
         }}
       />
+
       {isSelected && (
         <Transformer
           ref={trRef}
