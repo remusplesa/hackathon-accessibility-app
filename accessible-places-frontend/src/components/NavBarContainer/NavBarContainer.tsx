@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 
-export const NavBarContainer = ({ children, ...props }) => {
+export const NavBarContainer = ({ children, ...props }: any) => {
   return (
     <Flex
       as="nav"
