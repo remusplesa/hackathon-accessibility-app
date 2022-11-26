@@ -49,14 +49,8 @@ export const UploadPage = () => {
           </Box>
         )}
       >
-        <Box
-          h={300}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          backgroundColor={"gray.700"}
-          borderRadius={10}
-        >
+        <SimpleGrid columns={{ sm: 1, md: 1 }} spacing={10}>
+
           <ImageUpload onSelect={handleOnFileSelect} />
           {
             loading ?
@@ -69,7 +63,8 @@ export const UploadPage = () => {
               :
               <ImagePredictionCard selectedFile={selectedFile} />
           }
-        </Box>
+        </SimpleGrid>
+
         <Box
           h={300}
           display="flex"
