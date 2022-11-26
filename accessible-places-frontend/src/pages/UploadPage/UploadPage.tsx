@@ -9,8 +9,11 @@ import ImagePredictionCard from "../../components/ImagePredictionCard/ImagePredi
 
 
 
+import { Steps } from "../../components/Steps/Steps";
+import { Box } from "@chakra-ui/react";
+
 export const UploadPage = () => {
-  const [selectedFile, setSelectedFile] = useState<string>('');
+  const [selectedFile, setSelectedFile] = useState<string>("");
 
   const { savePredictions } = useContext(PredictionContext) as PredictionContextType
   const [selectedFileRaw, setSelectedFileRaw] = useState<File | null>(null)
@@ -30,19 +33,65 @@ export const UploadPage = () => {
   }, [data])
 
   return (
+
     <SimpleGrid columns={{ sm: 1, md: 1 }} spacing={10}>
-      <ImageUpload onSelect={handleOnFileSelect} />
-      {
-        loading ?
-          <Container>
-            <Heading as='h3' size='lg'>
-              Loading predictions..
-            </Heading>
-            <CircularProgress isIndeterminate color='green.300' />
-          </Container>
-          :
-          <ImagePredictionCard selectedFile={selectedFile} />
-      }
+      <Steps
+        renderFinishComponent={() => (
+          <Box
+            h={300}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            backgroundColor={"gray.700"}
+            borderRadius={10}
+          >
+            Finished!
+          </Box>
+        )}
+      >
+        <Box
+          h={300}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          backgroundColor={"gray.700"}
+          borderRadius={10}
+        >
+          <ImageUpload onSelect={handleOnFileSelect} />
+          {
+            loading ?
+              <Container>
+                <Heading as='h3' size='lg'>
+                  Loading predictions..
+                </Heading>
+                <CircularProgress isIndeterminate color='green.300' />
+              </Container>
+              :
+              <ImagePredictionCard selectedFile={selectedFile} />
+          }
+        </Box>
+        <Box
+          h={300}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          backgroundColor={"gray.700"}
+          borderRadius={10}
+        >
+          Another Step - 2
+        </Box>
+        <Box
+          h={300}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          backgroundColor={"gray.700"}
+          borderRadius={10}
+        >
+          Another Step - 3
+        </Box>
+      </Steps>
+
 
     </SimpleGrid>
   );
