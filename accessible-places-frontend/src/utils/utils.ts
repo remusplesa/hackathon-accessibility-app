@@ -74,7 +74,7 @@ export const convertCoortinatesToCanvas = (prediction: IPrediction) => {
     height: prediction.ymax - prediction.ymin,
     stroke: prediction.name.startsWith('stairs') ? STAIRS_COLOR : RAMP_COLOR,
     strokeWidth: 2,
-    id: `${prediction.name}_${prediction.ymin.toFixed(0)}`,
+    id: `${prediction.name}_${prediction.ymin.toFixed(0)}_${prediction.ymax.toFixed(0)}`,
 
   }
 }
