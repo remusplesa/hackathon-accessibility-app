@@ -1,4 +1,4 @@
-import { createContext, FC, useState } from "react";
+import { createContext, useState } from "react";
 import { IPrediction, PredictionContextType } from "../../utils/models";
 
 export const PredictionContext = createContext<PredictionContextType | null>(null);

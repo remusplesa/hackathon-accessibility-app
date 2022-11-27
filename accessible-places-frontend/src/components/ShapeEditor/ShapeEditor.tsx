@@ -1,9 +1,8 @@
-import { Card, CardHeader, CardBody, Stack, Heading, Text, Box, Flex } from "@chakra-ui/react";
-import { useContext, useEffect, useRef, useState } from "react";
-import { Stage, Layer, Rect, Image } from "react-konva";
+import { useContext, useEffect, useState } from "react";
+import { Stage, Layer, Image } from "react-konva";
 import { PredictionContext } from "../../Context/PredictionContext/PredictionContext";
-import { IRectangles, PredictionContextType, RAMP_COLOR, STAIRS_COLOR } from "../../utils/models";
-import { convertCoortinatesToCanvas, convertImageToCanvas } from "../../utils/utils";
+import { IRectangles, PredictionContextType } from "../../utils/models";
+import { convertCoortinatesToCanvas } from "../../utils/utils";
 import { RectangleShape } from "../RectangleShape/RectangleShape";
 
 

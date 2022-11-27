@@ -4,11 +4,12 @@ import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { UploadPage } from "./pages/UploadPage/UploadPage";
 
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import { HomePage } from "./pages/HomePage/HomePage";
 
 export function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<div>Accessible Places - Frontend</div>} />
+      <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/upload" element={<PrivateRoute />}>
         <Route path="/upload" element={<UploadPage />} />
