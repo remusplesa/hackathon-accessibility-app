@@ -15,10 +15,11 @@ class PlaceResolver {
   async getPlaces(
     @Arg('centerLat') centerLat: number,
     @Arg('centerLon') centerLng: number,
-    @Arg('radiusInKM', { nullable: true }) radiusInKM: number = 0.01,
+    @Arg('radiusInKM', { nullable: true }) radiusInKM: number = 0.5,
     @Arg('mocked', { nullable: true }) mocked: boolean = false
   ): Promise<PlaceResult[]> {
     // 0.01 degrees ~= 1.1km
+    const radiusInDeg = radiusInKM * 0.01;
 
     if (mocked) {
       const p = []
@@ -33,18 +34,18 @@ class PlaceResolver {
             elevator: faker.datatype.boolean(),
           },
           coordinates: {
-            lat: Number(faker.address.latitude(centerLat + 0.001, centerLat - 0.001, 6)),
-            lng: Number(faker.address.longitude(centerLng + 0.001, centerLng - 0.001, 6))
+            lat: Number(faker.address.latitude(centerLat + radiusInDeg, centerLat - radiusInDeg, 6)),
+            lng: Number(faker.address.longitude(centerLng + radiusInDeg, centerLng - radiusInDeg, 6))
           }
         })
       }
       return p;
     }
 
-    const latMin = centerLat - radiusInKM
-    const latMax = centerLat + radiusInKM
-    const lngMin = centerLng - radiusInKM
-    const lngMax = centerLng + radiusInKM
+    const latMin = centerLat - radiusInDeg
+    const latMax = centerLat + radiusInDeg
+    const lngMin = centerLng - radiusInDeg
+    const lngMax = centerLng + radiusInDeg
 
     const places = await PlaceModel.find({
       $and: [
