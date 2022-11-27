@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Input,
   FormControl,
@@ -7,15 +7,17 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useUploadUrl } from "../../logic/hooks/useUploadUrl";
-import axios from "axios";
+import { resizeFile } from "../../utils/utils";
 
-export function ImageUpload({onSelect}: Props) {
+export function ImageUpload({ onSelect }: Props) {
   const fileInputRef = useRef<any>(null);
   const { getUploadUrl, loading, data, error } = useUploadUrl();
 
   const handleFileSelection = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      onSelect(e.target.files[0]);
+      const file = e.target.files[0]
+      resizeFile(file).then(img => onSelect((img as File)))
+
     }
   };
 
@@ -60,6 +62,7 @@ export function ImageUpload({onSelect}: Props) {
     }
   }, [loading, data]);
 
+
   return (
     <div>
       <FormControl>
@@ -79,5 +82,5 @@ export function ImageUpload({onSelect}: Props) {
   );
 }
 type Props = {
-  onSelect: (data:File) => void;
+  onSelect: (data: File) => void;
 }

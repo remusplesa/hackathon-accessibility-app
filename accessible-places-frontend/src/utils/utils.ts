@@ -1,4 +1,6 @@
 import React from "react";
+import { IPrediction, RAMP_COLOR, STAIRS_COLOR } from "./models";
+import Resizer from "react-image-file-resizer";
 
 export const convertBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
@@ -13,7 +15,7 @@ export const convertBase64 = (file: File) => {
   });
 };
 
-export const convertImageToCanvas = (url:any) => {
+export const convertImageToCanvas = (url: any) => {
   const imageRef = React.useRef<HTMLImageElement | undefined>();
   const [_, setStateToken] = React.useState(0);
 
@@ -46,3 +48,33 @@ export const convertImageToCanvas = (url:any) => {
 
   return imageRef.current as CanvasImageSource;
 };
+
+
+export const resizeFile = (file: File) =>
+  new Promise((resolve) => {
+    Resizer.imageFileResizer(
+      file,
+      640,
+      640,
+      "JPEG",
+      100,
+      0,
+      (uri) => {
+        resolve(uri);
+      },
+      "file"
+    );
+  });
+export const convertCoortinatesToCanvas = (prediction: IPrediction) => {
+
+  return {
+    x: prediction.xmin,
+    y: prediction.ymin,
+    width: prediction.xmax - prediction.xmin,
+    height: prediction.ymax - prediction.ymin,
+    stroke: prediction.name.startsWith('stairs') ? STAIRS_COLOR : RAMP_COLOR,
+    strokeWidth: 2,
+    id: `${prediction.name}_${prediction.ymin.toFixed(0)}`,
+
+  }
+}
