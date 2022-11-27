@@ -24,13 +24,16 @@ function ImagePredictionCard({ selectedFile }: Props) {
                                 <>
                                     <Heading size='md'>Accessibility predictions</Heading>
                                     <Flex justifyContent={'space-between'}>
-                                        {predictions?.map(prediction => {
+                                        {predictions?.map((prediction) => {
                                             return (
                                                 <Box
                                                     border={'2px'}
                                                     borderColor={prediction.name.startsWith('stairs') ? STAIRS_COLOR : RAMP_COLOR}
                                                     p={3}
                                                     key={`${prediction.name}_${prediction.xmin}`}>
+                                                    <Text textTransform={"capitalize"}>
+                                                        ID: {`${prediction.name}_${prediction.ymin.toFixed(0)}_${prediction.ymax.toFixed(0)}`}
+                                                    </Text>
                                                     <Text textTransform={"capitalize"}>
                                                         Detected: {prediction.name}
                                                     </Text>
