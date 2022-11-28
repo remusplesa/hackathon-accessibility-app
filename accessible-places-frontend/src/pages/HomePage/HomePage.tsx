@@ -33,7 +33,6 @@ export function HomePage() {
                         zIndex={2}
                         fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}>
                         <Text
-                            color={'#2D3748'}
                             as={'span'}
                             position={'relative'}
                             _after={{
@@ -43,17 +42,17 @@ export function HomePage() {
                                 position: 'absolute',
                                 bottom: 1,
                                 left: 0,
-                                bg: '#B2F5EA',
+                                bg: '#397d50',
                                 zIndex: -1,
                             }}>
                             Discover
                         </Text>
                         <br />
-                        <Text as={'span'} color={'#2D3748'}>
+                        <Text as={'span'} >
                             accessible places
                         </Text>
                     </Heading>
-                    <Text color={'gray.500'} zIndex={2}>
+                    <Text zIndex={2}>
                         Aenean eu nunc id risus ultricies porttitor vitae nec nibh. Donec at nibh sit amet magna finibus malesuada at in diam. Proin ac dictum lectus. Proin mattis eu nisl eu sagittis. Etiam blandit venenatis lacus, et varius nulla ultrices id. Suspendisse potenti. Donec accumsan sollicitudin elit non vestibulum.
                     </Text>
                     <Stack
@@ -64,9 +63,10 @@ export function HomePage() {
                             size={'lg'}
                             fontWeight={'normal'}
                             px={6}
-                            colorScheme={'teal'}
-                            bg={'teal.500'}
-                            _hover={{ bg: 'teal.600' }}>
+                            color={["#4a9f66", "#4a9f66", "white", "white"]}
+                            bg={["white", "white", "#4a9f66", "#397d50"]}
+
+                        >
                             Get started
                         </Button>
                         <Button
@@ -103,10 +103,10 @@ export function HomePage() {
                         rounded={'2xl'}
                         boxShadow={'2xl'}
                         width={'full'}
-                        backgroundColor='white'
+                        backgroundColor='#2D3748                        '
                         overflow={'hidden'}>
                         <IconButton
-                            aria-label={'Play Button'}
+                            aria-label={'pin'}
                             variant={'ghost'}
                             _hover={{ bg: 'transparent' }}
                             icon={<PulsePin />}

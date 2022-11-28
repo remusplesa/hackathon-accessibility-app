@@ -7,7 +7,7 @@ export const MenuItem = ({
   ...rest
 }: Props) => {
   return (
-    <Link href={to}>
+    <Link color={'white'} href={to}>
       <Text display="block" {...rest}>
         {children}
       </Text>
