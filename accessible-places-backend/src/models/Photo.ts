@@ -15,6 +15,6 @@ export class Photo {
 
   @Field(() => [Detection], { nullable: true })
   @prop()
-  detections!: Detection;
+  detections!: Detection[];
 }
 
