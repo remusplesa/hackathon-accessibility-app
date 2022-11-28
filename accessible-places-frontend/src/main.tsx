@@ -8,7 +8,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 // Providers
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { AuthProvider } from "./components/AuthProvider";
 import { PredictionProvider } from "./Context/PredictionContext/PredictionContext";
 import theme from "./theme";

@@ -4,23 +4,23 @@
 <ellipse cx="735" cy="463.5" rx="705" ry="617.5" fill="url(#paint0_radial_1_2)"/>
 </mask>
 <g mask="url(#mask0_1_2)">
-<rect x="-4.79901" y="5.49991" width="1747.69" height="63.4557" transform="rotate(36.5655 -4.79901 5.49991)" fill="#1A202C"/>
-<path d="M225.277 -142.282L1675 923L1637.43 974.135L187.702 -91.1468L225.277 -142.282Z" fill="#1A202C"/>
-<rect x="1232" y="626.668" width="488.031" height="41.6198" transform="rotate(-32.6619 1232 626.668)" fill="#1A202C"/>
-<rect x="1008.57" y="1" width="1799.03" height="63.4557" transform="rotate(36.3091 1008.57 1)" fill="#1A202C"/>
-<rect x="604.324" y="680.565" width="229.1" height="41.6198" transform="rotate(39.2347 604.324 680.565)" fill="#1A202C"/>
-<rect x="1167" y="594.038" width="488.031" height="41.6198" transform="rotate(147.338 1167 594.038)" fill="#1A202C"/>
-<rect x="403.006" y="321.74" width="1278.28" height="63.4557" transform="rotate(-30 403.006 321.74)" fill="#1A202C"/>
-<rect x="-41" y="984.5" width="1753.78" height="94.3563" transform="rotate(-30 -41 984.5)" fill="#1A202C"/>
+<rect x="-4.79901" y="5.49991" width="1747.69" height="63.4557" transform="rotate(36.5655 -4.79901 5.49991)" fill="#171923"/>
+<path d="M225.277 -142.282L1675 923L1637.43 974.135L187.702 -91.1468L225.277 -142.282Z" fill="#171923"/>
+<rect x="1232" y="626.668" width="488.031" height="41.6198" transform="rotate(-32.6619 1232 626.668)" fill="#171923"/>
+<rect x="1008.57" y="1" width="1799.03" height="63.4557" transform="rotate(36.3091 1008.57 1)" fill="#171923"/>
+<rect x="604.324" y="680.565" width="229.1" height="41.6198" transform="rotate(39.2347 604.324 680.565)" fill="#171923"/>
+<rect x="1167" y="594.038" width="488.031" height="41.6198" transform="rotate(147.338 1167 594.038)" fill="#171923"/>
+<rect x="403.006" y="321.74" width="1278.28" height="63.4557" transform="rotate(-30 403.006 321.74)" fill="#171923"/>
+<rect x="-41" y="984.5" width="1753.78" height="94.3563" transform="rotate(-30 -41 984.5)" fill="#171923"/>
 </g>
 </g>
 <defs>
 <radialGradient id="paint0_radial_1_2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(735 463.5) rotate(90) scale(549.5 627.364)">
-<stop offset="0.827359" stop-color="#1A202C"/>
-<stop offset="1" stop-color="#1A202C" stop-opacity="0"/>
+<stop offset="0.827359" stop-color="#171923"/>
+<stop offset="1" stop-color="#171923" stop-opacity="0"/>
 </radialGradient>
 <clipPath id="clip0_1_2">
-<rect width="1440" height="1024" fill="#1A202C"/>
+<rect width="1440" height="1024" fill="#171923"/>
 </clipPath>
 </defs>
 </svg>

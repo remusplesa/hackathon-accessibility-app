@@ -34,7 +34,6 @@ export function HomePage() {
                         fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}>
                         <Text
                             as={'span'}
-                            color='white'
                             position={'relative'}
                             _after={{
                                 content: "''",
@@ -43,13 +42,13 @@ export function HomePage() {
                                 position: 'absolute',
                                 bottom: 1,
                                 left: 0,
-                                bg: '#B2F5EA',
+                                bg: '#397d50',
                                 zIndex: -1,
                             }}>
                             Discover
                         </Text>
                         <br />
-                        <Text as={'span'} color={'#2D3748'}>
+                        <Text as={'span'} >
                             accessible places
                         </Text>
                     </Heading>
@@ -64,9 +63,10 @@ export function HomePage() {
                             size={'lg'}
                             fontWeight={'normal'}
                             px={6}
-                            colorScheme={'teal'}
-                            bg={'teal.500'}
-                            _hover={{ bg: 'teal.600' }}>
+                            color={["#4a9f66", "#4a9f66", "white", "white"]}
+                            bg={["white", "white", "#4a9f66", "#397d50"]}
+
+                        >
                             Get started
                         </Button>
                         <Button
