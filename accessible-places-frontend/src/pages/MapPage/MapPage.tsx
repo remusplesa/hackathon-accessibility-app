@@ -17,6 +17,8 @@ import { usePlaces } from "../../logic/hooks/usePlaces";
 import { Place } from "../../utils/models";
 import "./MapPage.styles.css";
 
+const DEFAULT_CENTER: LatLngExpression = [51.505, -0.09];
+
 const MapLocationMarker = ({ onOpen, setCenter }: any) => {
   const map = useMap();
   const [myLocation, setMyLocation] = useState<LatLngExpression>([0, 0]);
@@ -24,7 +26,7 @@ const MapLocationMarker = ({ onOpen, setCenter }: any) => {
   const eventMap = useMapEvents({
     moveend: () => {
       console.log("MAP CENTER MOVED", map.getCenter());
-      setCenter(map.getCenter())
+      setCenter(map.getCenter());
     },
   });
 
@@ -90,21 +92,22 @@ export const MapPage = memo(() => {
   const { onOpen } = useSideDrawerContext();
   const [selected, setSelected] = useState<Place>();
   const [center, setCenter] = useState<{ lat: number; lng: number }>();
-  const { getPlaces, data, loading, error } = usePlaces()
-  const debouncer = useCallback(_.debounce(getPlaces, 1000), []);
+  const { getPlaces, data, loading, error } = usePlaces();
+  const debouncer = useCallback(_.debounce(getPlaces, 100), []);
 
   useEffect(() => {
+    console.log("AICI", center);
     debouncer({
-      centerLat: center?.lat ?? 0,
-      centerLng: center?.lng ?? 0,
+      centerLat: center?.lat || DEFAULT_CENTER[0],
+      centerLng: center?.lng || DEFAULT_CENTER[1],
       mocked: true,
-    })
-  }, [center])
+    });
+  }, [center]);
 
   return (
     <>
       <MapContainer
-        center={[51.505, -0.09]}
+        center={DEFAULT_CENTER}
         zoom={13}
         minZoom={12}
         scrollWheelZoom={false}
