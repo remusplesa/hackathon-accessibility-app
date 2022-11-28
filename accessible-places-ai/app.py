@@ -5,21 +5,24 @@ Run a Flask REST API exposing one or more YOLOv5s models
 
 import argparse
 import io
+from flask_cors import CORS
 
 import torch
 from flask import Flask, request,jsonify
 from PIL import Image
 
 app = Flask(__name__)
+CORS(app)
+
 print(torch.__version__)
-DETECTION_URL = "/v1/predict"
+DETECTION_URL = "/predict"
 
 model = torch.hub.load("ultralytics/yolov5", 'custom','./model/best.pt' )
 model.conf=0.5
 
 def batch_predict(image_bytes):
     im = Image.open(io.BytesIO(image_bytes))
-    results = model(im, size=640) 
+    results = model(im) 
     
     return results.pandas().xyxy[0].to_json(orient="records")
 
@@ -34,13 +37,9 @@ def stream_predict():
         im_file = request.files["image"]
         im_bytes = im_file.read()
         output=batch_predict(im_bytes)
-        return output
+        response=jsonify(output)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Flask API exposing YOLOv5 model")
-    parser.add_argument("--port", type=int, help="port number")
-    opt = parser.parse_args()
-
-
-
-    app.run(port=opt.port)  # debug=True causes Restarting with stat
+    app.run(debug=True,host="0.0.0.0")  # debug=True causes Restarting with stat

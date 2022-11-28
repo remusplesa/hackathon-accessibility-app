@@ -1,5 +1,6 @@
 import React from "react";
-import { Rect, Transformer } from "react-konva";
+import { Label, Rect, Tag, Transformer, Text } from "react-konva";
+import { IRectangles } from "../../utils/models";
 
 export const RectangleShape = ({
   shapeProps,
@@ -20,6 +21,10 @@ export const RectangleShape = ({
 
   return (
     <React.Fragment>
+      <Label x={shapeProps.x} y={shapeProps.y}>
+        <Tag fill={shapeProps.stroke} />
+        <Text text={shapeProps.id} />
+      </Label>
       <Rect
         onClick={onSelect}
         onTap={onSelect}
@@ -63,6 +68,7 @@ export const RectangleShape = ({
           }
         }}
       />
+
       {isSelected && (
         <Transformer
           ref={trRef}
@@ -80,7 +86,7 @@ export const RectangleShape = ({
 };
 
 type Props = {
-  shapeProps: any;
+  shapeProps: IRectangles;
   isSelected: boolean;
   onSelect: (data: any) => void;
   onChange: (data: any) => void;

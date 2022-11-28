@@ -10,6 +10,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AuthProvider } from "./components/AuthProvider";
+import { PredictionProvider } from "./Context/PredictionContext/PredictionContext";
 import theme from "./theme";
 
 const apolloClient = new ApolloClient({
@@ -25,9 +26,11 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ChakraProvider resetCSS theme={theme}>
       <AuthProvider>
         <ApolloProvider client={apolloClient}>
-          <Router>
-            <App />
-          </Router>
+          <PredictionProvider>
+            <Router>
+              <App />
+            </Router>
+          </PredictionProvider>
         </ApolloProvider>
       </AuthProvider>
     </ChakraProvider>

@@ -15,7 +15,8 @@ export const MenuLinks = ({ isOpen }: Props) => {
         pt={[4, 4, 0, 0]}
       >
         <MenuItem to="/">Home</MenuItem>
-        <MenuItem to="/map">map</MenuItem>
+        <MenuItem to="/map">Map</MenuItem>
+        <MenuItem to="/upload">Upload</MenuItem>
         <MenuItem to="/login" isLast>
           <Button
             size="sm"
