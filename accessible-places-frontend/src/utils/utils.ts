@@ -198,8 +198,8 @@ class Resizer {
     rotation: number,
     responseUriFunc: any,
     outputType = "base64",
-    minWidth = null,
-    minHeight = null,
+    minWidth: number | null = null,
+    minHeight: number | null = null,
   ) {
     const reader = new FileReader();
     if (file) {
@@ -209,12 +209,14 @@ class Resizer {
         reader.readAsDataURL(file);
         reader.onload = () => {
           var image = new Image();
+          // @ts-ignore
           image.src = reader.result;
           image.onload = function () {
             var resizedDataUrl = Resizer.resizeAndRotateImage(
               image,
               maxWidth,
               maxHeight,
+              // @ts-ignore
               minWidth,
               minHeight,
               compressFormat,
@@ -243,6 +245,7 @@ class Resizer {
           };
         };
         reader.onerror = (error) => {
+          // @ts-ignore
           throw Error(error);
         };
       }
@@ -251,16 +254,16 @@ class Resizer {
     }
   }
   static imageFileResizer = (
-    file,
-    maxWidth,
-    maxHeight,
-    compressFormat,
-    quality,
-    rotation,
-    responseUriFunc,
-    outputType,
-    minWidth?,
-    minHeight?) => {
+    file: File,
+    maxWidth: number,
+    maxHeight: number,
+    compressFormat: string,
+    quality: number,
+    rotation: number,
+    responseUriFunc: any,
+    outputType: string,
+    minWidth?: number | null,
+    minHeight?: number | null) => {
     return Resizer.createResizedImage(
       file,
       maxWidth,
