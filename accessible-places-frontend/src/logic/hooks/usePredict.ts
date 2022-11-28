@@ -8,8 +8,8 @@ export const usePredict = (file: File | null) => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    // const base_url = import.meta.env.VITE_ML_ENDPOINT
-    const base_url = 'http://127.0.0.1:5001'
+    const base_url = import.meta.env.VITE_ML_ENDPOINT
+    // const base_url = 'http://127.0.0.1:5001'
     const url = `${base_url}/predict`
 
     const prepareImage = async (file: File) => {
