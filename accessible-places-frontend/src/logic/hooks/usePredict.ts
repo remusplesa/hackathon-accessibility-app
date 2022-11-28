@@ -14,14 +14,7 @@ export const usePredict = (file: File | null) => {
 
     const prepareImage = async (file: File) => {
         let formData = new FormData();
-        try {
-            const resizedImage = await resizeFile(file)
-            // @ts-ignore
-            formData.append("image", resizedImage);
-
-        } catch (err) {
-            console.error(err)
-        }
+        formData.append("image", file);
         return formData
     }
 
