@@ -30,7 +30,7 @@ class PlaceResolver {
           isAccessible: faker.datatype.boolean(),
           photos: (() => {
             let photos = [];
-            for (let i = 0; i < Math.floor(Math.random() * 5); i++) {
+            for (let i = 0; i < faker.datatype.number({ min: 1, max: 6 }); i++) {
               photos.push({
                 id: faker.datatype.uuid(),
                 url: faker.image.abstract(),
