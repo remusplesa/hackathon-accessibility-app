@@ -28,7 +28,24 @@ class PlaceResolver {
           _id: faker.datatype.uuid(),
           poiName: faker.company.name(),
           isAccessible: faker.datatype.boolean(),
-          photoUrl: faker.image.abstract(),
+          photos: (() => {
+            let photos = [];
+            for (let i = 0; i < Math.floor(Math.random() * 5); i++) {
+              photos.push({
+                id: faker.datatype.uuid(),
+                url: faker.image.abstract(),
+                detections: [{
+                  id: faker.datatype.uuid(),
+                  xMax: faker.datatype.number({ min: 10, max: 600 }),
+                  xMin: faker.datatype.number({ min: 10, max: 600 }),
+                  yMax: faker.datatype.number({ min: 10, max: 600 }),
+                  yMin: faker.datatype.number({ min: 10, max: 600 }),
+                  label: faker.helpers.arrayElement(['stairs', 'ramp'])
+                }]
+              })
+            };
+            return photos;
+          })(),
           accesibilityDetails: {
             parking: faker.datatype.boolean(),
             elevator: faker.datatype.boolean(),
