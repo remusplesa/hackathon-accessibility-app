@@ -1,5 +1,5 @@
 .map-container {
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 }
 
@@ -14,4 +14,9 @@
   left: 0;
   margin: 12px;
   border-radius: 4px;
+}
+
+.map-tiles {
+  filter: brightness(0.6) invert(1) contrast(3) hue-rotate(180deg)
+    saturate(0.3) brightness(0.8);
 }

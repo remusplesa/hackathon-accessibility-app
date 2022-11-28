@@ -36,7 +36,7 @@ export function ShapeEditor({ selectedFile }: Props) {
   return (
     <>
       {selectedFile && (
-
+        // @ts-ignore 
         <Stage
           width={Number(selectedFile.width) > 539 ? 539 : Number(selectedFile.width)}
           height={Number(selectedFile.height)}
@@ -62,7 +62,6 @@ export function ShapeEditor({ selectedFile }: Props) {
             ))}
           </Layer>
         </Stage>
-
       )}
     </>
   );
