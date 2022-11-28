@@ -33,8 +33,8 @@ export function HomePage() {
                         zIndex={2}
                         fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}>
                         <Text
-                            color={'#2D3748'}
                             as={'span'}
+                            color='white'
                             position={'relative'}
                             _after={{
                                 content: "''",
@@ -53,7 +53,7 @@ export function HomePage() {
                             accessible places
                         </Text>
                     </Heading>
-                    <Text color={'gray.500'} zIndex={2}>
+                    <Text zIndex={2}>
                         Aenean eu nunc id risus ultricies porttitor vitae nec nibh. Donec at nibh sit amet magna finibus malesuada at in diam. Proin ac dictum lectus. Proin mattis eu nisl eu sagittis. Etiam blandit venenatis lacus, et varius nulla ultrices id. Suspendisse potenti. Donec accumsan sollicitudin elit non vestibulum.
                     </Text>
                     <Stack
@@ -103,10 +103,10 @@ export function HomePage() {
                         rounded={'2xl'}
                         boxShadow={'2xl'}
                         width={'full'}
-                        backgroundColor='white'
+                        backgroundColor='#2D3748                        '
                         overflow={'hidden'}>
                         <IconButton
-                            aria-label={'Play Button'}
+                            aria-label={'pin'}
                             variant={'ghost'}
                             _hover={{ bg: 'transparent' }}
                             icon={<PulsePin />}

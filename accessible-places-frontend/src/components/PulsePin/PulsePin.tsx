@@ -2,7 +2,7 @@ import { Box, createIcon, Flex, Icon, keyframes } from '@chakra-ui/react';
 
 export function PulsePin() {
     const size = '96px';
-    const color = '#FED7D7';
+    const color = '#718096';
     const pulseRing = keyframes`
 	0% {
     transform: scale(0.33);
