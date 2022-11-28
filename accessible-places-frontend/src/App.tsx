@@ -12,7 +12,6 @@ function App() {
         align="center"
         m="0 auto"
         h="100vh"
-        bgColor={"gray.900"}
       >
         <Header />
         <AppRouter />
