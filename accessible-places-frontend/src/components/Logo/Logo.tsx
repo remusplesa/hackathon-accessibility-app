@@ -1,9 +1,14 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, Link } from "@chakra-ui/react";
 import { ReactComponent as AppLogo } from "../../assets/logo/logo.svg";
 
 export const Logo = () => {
   return (
-    <Box w="150px" color={["white", "white", "#4a9f66", "#4a9f66"]}>
+    <Link
+      w="150px"
+      style={{ textDecoration: "none" }}
+      color={["white", "white", "#4a9f66", "#4a9f66"]}
+      href={"/"}
+    >
       <Flex gap={"10px"} align="center">
         <Box width={"50px"}>
           <AppLogo />
@@ -12,6 +17,6 @@ export const Logo = () => {
           Accessible Places
         </Text>
       </Flex>
-    </Box>
+    </Link>
   );
 };
