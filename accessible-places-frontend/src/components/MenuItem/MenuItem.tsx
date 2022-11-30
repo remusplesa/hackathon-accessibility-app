@@ -7,7 +7,7 @@ export const MenuItem = ({
   ...rest
 }: Props) => {
   return (
-    <Link color={'white'} href={to}>
+    <Link color={"white"} href={to}>
       <Text display="block" {...rest}>
         {children}
       </Text>
@@ -19,4 +19,6 @@ type Props = {
   children: React.ReactElement | string;
   isLast?: boolean;
   to: string;
+  pt?: string;
+  pb?: string;
 };
