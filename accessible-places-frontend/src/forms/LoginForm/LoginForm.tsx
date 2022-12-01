@@ -12,7 +12,10 @@ import {
 } from "@chakra-ui/react";
 import { ReactComponent as GitHubLogo } from "../../assets/logo/github-icon-1.svg";
 
-export default function LoginForm({ handleGithubLogin, isGithubLoginDisabled }: Props) {
+export default function LoginForm({
+  handleGithubLogin,
+  isGithubLoginDisabled,
+}: Props) {
   return (
     <Flex width="full" align="center" justifyContent="center">
       <Box p={2} border="2px solid white" borderRadius={"15px"} padding={"10"}>
@@ -48,8 +51,14 @@ export default function LoginForm({ handleGithubLogin, isGithubLoginDisabled }: 
             rightIcon={<GitHubLogo />}
             disabled={isGithubLoginDisabled}
             onClick={handleGithubLogin}
-            colorScheme="whiteAlpha"
-          >GitHub</Button>
+            color={["#4a9f66", "#4a9f66", "white", "white"]}
+            bg={["white", "white", "#4a9f66", "#397d50"]}
+            _hover={{
+              bg: ["#67e491", "#67e491", "#397d50", "#397d50"],
+            }}
+          >
+            GitHub
+          </Button>
         </Box>
       </Box>
     </Flex>

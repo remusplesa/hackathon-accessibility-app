@@ -1,10 +1,8 @@
 import {
   Box,
   Button,
-  CloseButton,
   Container,
   Icon,
-  Square,
   Stack,
   Text,
   useBreakpointValue,
@@ -66,6 +64,7 @@ export const ConsentBar = () => {
           border="2px"
           borderColor={"#4a9f66"}
           borderRadius={"15px"}
+          backgroundColor="green.900"
         >
           <Box bg="bg-surface" boxShadow={useColorModeValue("sm", "sm-dark")}>
             <Container py={{ base: "4", md: "2.5" }} position="relative">

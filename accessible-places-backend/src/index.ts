@@ -5,7 +5,7 @@ import { config } from 'dotenv';
 import { connect } from 'mongoose';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
-import { PlaceResolver, UploadResolver } from './resolvers';
+import { PlaceResolver, UploadResolver, CaptchaResolver } from './resolvers';
 import { AzureBlobConn } from './utils/connection.azure';
 import { BasicAuthCtx } from './utils/basicAuth';
 
@@ -22,7 +22,7 @@ const startServer = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [PlaceResolver, UploadResolver],
+      resolvers: [PlaceResolver, UploadResolver, CaptchaResolver],
     }),
     context: ({ req, res }) => ({ req, res, ...AzureBlobConn, ...BasicAuthCtx(req) }),
   });

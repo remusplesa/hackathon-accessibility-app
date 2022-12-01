@@ -1,6 +1,7 @@
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
 import { PlaceModel, Place, PlaceResult, PlaceUpdate } from '../models';
 import { faker } from '@faker-js/faker';
+import { mockPlaces } from '../utils/mockPlaces';
 
 @Resolver(Place)
 class PlaceResolver {
@@ -21,31 +22,14 @@ class PlaceResolver {
     // 0.01 degrees ~= 1.1km
     const radiusInDeg = radiusInKM * 0.01;
 
-    if (mocked) {
-      const p = []
-      for (let i = 0; i < 20; i++) {
-        p.push({
-          _id: faker.datatype.uuid(),
-          poiName: faker.company.name(),
-          isAccessible: faker.datatype.boolean(),
-          photoUrl: faker.image.abstract(),
-          accesibilityDetails: {
-            parking: faker.datatype.boolean(),
-            elevator: faker.datatype.boolean(),
-          },
-          coordinates: {
-            lat: Number(faker.address.latitude(centerLat + radiusInDeg, centerLat - radiusInDeg, 6)),
-            lng: Number(faker.address.longitude(centerLng + radiusInDeg, centerLng - radiusInDeg, 6))
-          }
-        })
-      }
-      return p;
-    }
-
     const latMin = centerLat - radiusInDeg
     const latMax = centerLat + radiusInDeg
     const lngMin = centerLng - radiusInDeg
     const lngMax = centerLng + radiusInDeg
+
+    if (mocked) {
+      return mockPlaces(latMax, latMin, lngMax, lngMin);
+    }
 
     const places = await PlaceModel.find({
       $and: [
@@ -53,6 +37,8 @@ class PlaceResolver {
         { 'coordinates.lng': { $gt: lngMin, $lt: lngMax } },
       ]
     });
+
+    return places;
 
   }
 

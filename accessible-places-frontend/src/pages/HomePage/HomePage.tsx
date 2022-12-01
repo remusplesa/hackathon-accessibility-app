@@ -7,11 +7,7 @@ import {
     Text,
     Button,
     Image,
-    Icon,
-    IconButton,
-    createIcon,
-    IconProps,
-    useColorModeValue,
+    IconButton
 } from '@chakra-ui/react';
 import Wallpaper from '../../assets/wallpaper.svg'
 import TransparentMap from '../../assets/map-transparent.svg'
@@ -19,7 +15,8 @@ import { PulsePin } from '../../components/PulsePin/PulsePin';
 
 export function HomePage() {
     return (
-        <Container maxW={'7xl'} position='relative'>
+
+        <Container maxW={'7xl'} position='relative' overflow={"hidden"}>
             <Stack
                 align={'center'}
                 spacing={{ base: 8, md: 10 }}

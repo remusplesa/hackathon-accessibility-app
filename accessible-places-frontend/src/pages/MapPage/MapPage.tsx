@@ -17,6 +17,8 @@ import { usePlaces } from "../../logic/hooks/usePlaces";
 import { Place } from "../../utils/models";
 import "./MapPage.styles.css";
 
+import { mapPin } from "../../components/MapPin/MapPin";
+
 const DEFAULT_CENTER: LatLngExpression = [51.505, -0.09];
 
 const MapLocationMarker = ({ onOpen, setCenter }: any) => {
@@ -72,6 +74,7 @@ const PlaceMarker = memo(({ place, onOpen, select }: PlaceMarkerProps) => {
   return (
     <>
       <Marker
+        icon={mapPin(place?.isAccessible)}
         position={place.coordinates}
         eventHandlers={{
           click: () => {

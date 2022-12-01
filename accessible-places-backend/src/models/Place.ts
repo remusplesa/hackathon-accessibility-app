@@ -1,8 +1,8 @@
 import { prop, getModelForClass } from '@typegoose/typegoose';
 import { Field, ObjectType, InputType } from 'type-graphql';
 import { Coordinates } from './Coordinates';
-import { Detection } from './Detection';
 import { ManualAccesibilityItems } from './ManualAccesibilityItems';
+import { Photo } from './Photo';
 
 @InputType('PlaceInput')
 @ObjectType('PlaceType')
@@ -19,17 +19,13 @@ export class Place {
   @prop()
   createdBy?: string;
 
-  @Field({ nullable: false })
-  @prop()
-  photoUrl!: string;
-
   @Field(() => Coordinates, { nullable: false })
   @prop()
   coordinates!: Coordinates;
 
-  @Field(() => [Detection], { nullable: true })
+  @Field(() => [Photo], { nullable: true })
   @prop()
-  detections!: Detection;
+  photos!: Photo[];
 
   @Field(() => ManualAccesibilityItems, { nullable: true })
   @prop()
@@ -46,7 +42,7 @@ export class PlaceResult extends Place {
 
 @InputType()
 @ObjectType()
-export class PlaceUpdate extends PlaceResult {}
+export class PlaceUpdate extends PlaceResult { }
 
 
 export const PlaceModel = getModelForClass(Place);

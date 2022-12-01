@@ -5,6 +5,7 @@ import { UploadPage } from "./pages/UploadPage/UploadPage";
 
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import { HomePage } from "./pages/HomePage/HomePage";
+import { ProfilePage } from "./pages/ProfilePage/ProfilePage";
 
 export function AppRouter() {
   return (
@@ -16,6 +17,9 @@ export function AppRouter() {
       </Route>
       <Route path="/map" element={<PrivateRoute />}>
         <Route path="/map" element={<MapPage />} />
+      </Route>
+      <Route path="/profile" element={<PrivateRoute />}>
+        <Route path="/profile" element={<ProfilePage />} />
       </Route>
     </Routes>
   );
