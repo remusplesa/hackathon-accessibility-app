@@ -1,23 +1,28 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IPrediction } from "../../utils/models";
 
-export const usePredict = (file: File | null) => {
-    const [data, setData] = useState<IPrediction[] | null>(null);
+export const usePredict = (file: FileList | null) => {
+    const [data, setData] = useState<IPrediction[][] | null>(null);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    // const base_url = import.meta.env.VITE_ML_ENDPOINT
-    const base_url = 'http://127.0.0.1:5001'
-    const url = `${base_url}/predict`
 
-    const prepareImage = async (file: File) => {
+    const prod_url = import.meta.env.VITE_ML_ENDPOINT
+    const base_url = 'http://127.0.0.1:5001'
+    const isProd = import.meta.env.PROD
+    const url = `${isProd ? prod_url : base_url}/predict`
+
+    const prepareImage = async (file: FileList) => {
         let formData = new FormData();
-        formData.append("image", file);
+        const fileArr = Array.from(file)
+        fileArr.forEach(f => {
+            formData.append(f.name, f);
+        })
         return formData
     }
 
-    const fetch = (file: File) => {
+    const fetch = (file: FileList) => {
         prepareImage(file).then(img => {
             axios
                 .post(url, img, {
@@ -26,7 +31,7 @@ export const usePredict = (file: File | null) => {
                     }
                 })
                 .then((response) => {
-                    setData(JSON.parse(response.data))
+                    setData(response.data?.map(item => JSON.parse(item)))
                     setLoading(false)
 
                 })
@@ -43,7 +48,6 @@ export const usePredict = (file: File | null) => {
             fetch(file);
         }
 
-    }, [file]);
-
+    }, []);
     return { data, error, loading };
 };

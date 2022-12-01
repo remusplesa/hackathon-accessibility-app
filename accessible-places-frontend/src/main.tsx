@@ -12,6 +12,8 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { AuthProvider } from "./components/AuthProvider";
 import { PredictionProvider } from "./Context/PredictionContext/PredictionContext";
 import theme from "./theme";
+import { UploadFormProvider } from "./Context/UploadFormContext/UploadFormContext";
+import { StepsProvider } from "./Context/StepsContext/StepsContext";
 
 const apolloClient = new ApolloClient({
   uri: import.meta.env.VITE_BACKEND_GRAPHQL_URL,
@@ -27,9 +29,13 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <AuthProvider>
         <ApolloProvider client={apolloClient}>
           <PredictionProvider>
-            <Router>
-              <App />
-            </Router>
+            <UploadFormProvider>
+              <StepsProvider>
+                <Router>
+                  <App />
+                </Router>
+              </StepsProvider>
+            </UploadFormProvider>
           </PredictionProvider>
         </ApolloProvider>
       </AuthProvider>

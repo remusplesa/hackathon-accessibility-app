@@ -1,5 +1,5 @@
 import React from "react";
-import { IPrediction, RAMP_COLOR, STAIRS_COLOR } from "./models";
+import { IPrediction, IRectangles, RAMP_COLOR, STAIRS_COLOR } from "./models";
 
 export const convertBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
@@ -293,3 +293,33 @@ export const resizeFile = (file: File) =>
       "file"
     );
   });
+
+export const uploadToAzure = async (imageUrl: string, imageRaw: File) => {
+  const fileReader = new FileReader();
+  fileReader.readAsArrayBuffer(imageRaw);
+
+  fileReader.onloadend = async (event) => {
+    const target = event.target;
+    if (target?.readyState == fileReader.DONE) {
+      var xhr = new XMLHttpRequest();
+      var requestData = new Uint8Array(target!.result as any);
+
+      xhr.open("PUT", imageUrl, true);
+      xhr.responseType = "blob";
+      xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+      xhr.setRequestHeader("X-File-Name", imageRaw.name);
+      xhr.setRequestHeader("x-ms-blob-type", "BlockBlob");
+      xhr.setRequestHeader(
+        "Content-Type",
+        imageRaw.type || "application/octet-stream"
+      );
+      xhr.setRequestHeader(
+        "x-ms-blob-content-type",
+        imageRaw.type || "application/octet-stream"
+      );
+      xhr.setRequestHeader("x-ms-version", "2016-05-31");
+
+      xhr.send(requestData);
+    }
+  };
+};

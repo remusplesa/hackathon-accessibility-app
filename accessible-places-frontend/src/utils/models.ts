@@ -7,11 +7,31 @@ export interface IPrediction {
     class: number;
     name: string;
 }
+
+export interface IUpload extends Place {
+    imageRaw: FileList;
+    imageBase64: string[];
+    imageUrl: string[];
+    predictions: IPrediction[][];
+    boundingBoxes: IRectangles[][];
+}
+export type UploadFormContextType = {
+    formData: IUpload | null;
+    saveData: (formData: Partial<IUpload>) => void;
+}
 export type PredictionContextType = {
-    predictions: IPrediction[] | null;
-    savePredictions: (predictions: IPrediction[]) => void;
+    predictions: IPrediction[][] | null;
+    savePredictions: (predictions: IPrediction[][]) => void;
     updatePredictions?: (id: number) => void;
 };
+
+export type StepsContextType = {
+    currentStep: number;
+    totalSteps: number;
+    setCurrentStep: (step: number) => void;
+    setTotalSteps: (steps: number) => void;
+}
+
 
 export interface IRectangles {
     x: number;
