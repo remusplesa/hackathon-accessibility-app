@@ -1,4 +1,4 @@
-import { useLazyQuery, gql, ApolloError } from "@apollo/client";
+import { useLazyQuery, gql, ApolloError, LazyQueryResult, OperationVariables } from "@apollo/client";
 import { handleApolloError } from "../helpers/handleApolloError";
 
 const GET_UPLOAD_URL = gql`
@@ -38,7 +38,7 @@ type RawResponse = {
 };
 
 type UploadUrlQueryResult = {
-  getUploadUrl: (args: QueryArgs) => void;
+  getUploadUrl: (args: QueryArgs) => Promise<LazyQueryResult<any, OperationVariables>>;
   loading?: boolean;
   data?: string;
   error?: ApolloError;

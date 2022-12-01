@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Progress, HStack, Box, Flex } from "@chakra-ui/react";
 import "./Steps.styles.css";
 import { CheckIcon } from "@chakra-ui/icons";
 import { CSSTransition } from "react-transition-group";
+import { StepsContext } from "../../Context/StepsContext/StepsContext";
 
 export const Steps = ({
   children,
@@ -11,13 +12,12 @@ export const Steps = ({
   children: React.ReactNode[];
   renderFinishComponent?: () => JSX.Element;
 }) => {
-  const [currentStep, setCurrentStep] = useState<number>(0);
-  const numberOfSteps = children?.length;
+  const { currentStep, setTotalSteps, totalSteps } = useContext(StepsContext);
 
   const generateStepsControllerItems = () => {
     const stepControllerItems = [];
 
-    for (let i = 0; i < numberOfSteps; i++) {
+    for (let i = 0; i < totalSteps; i++) {
       stepControllerItems.push({
         index: i,
         component: <>{`${i + 1}`}</>,
@@ -26,6 +26,10 @@ export const Steps = ({
 
     return stepControllerItems;
   };
+
+  useEffect(() => {
+    children.length && setTotalSteps(children.length)
+  }, [children.length])
 
   const controllerItems = generateStepsControllerItems();
 
@@ -59,10 +63,10 @@ export const Steps = ({
               >
                 {currentStep > idx ? <CheckIcon /> : controllerItem.component}
               </Box>
-              {idx !== numberOfSteps - 1 && (
+              {idx !== totalSteps - 1 && (
                 <Progress
                   value={currentStep > idx ? 100 : 0}
-                  w={`${Math.floor(100 / numberOfSteps)}%`}
+                  w={`${Math.floor(100 / totalSteps)}%`}
                   h={1}
                   colorScheme="green"
                   className="display-item"
@@ -74,7 +78,7 @@ export const Steps = ({
       </Flex>
 
       <Box w={"100%"} padding={8}>
-        {currentStep === numberOfSteps ? (
+        {currentStep === totalSteps ? (
           <div key={"step-child-last"}>{renderFinishComponent()}</div>
         ) : (
           React.Children.map(children, (child, idx) => (
@@ -87,22 +91,6 @@ export const Steps = ({
           ))
         )}
       </Box>
-
-      <Flex gap="2" paddingX={8} w="100%" justifyContent="end">
-        <Button
-          onClick={() => setCurrentStep((prevStep) => prevStep - 1)}
-          disabled={currentStep === 0}
-          variant="outline"
-        >
-          Prev
-        </Button>
-        <Button
-          onClick={() => setCurrentStep((prevStep) => prevStep + 1)}
-          disabled={currentStep === numberOfSteps}
-        >
-          Next
-        </Button>
-      </Flex>
     </>
   );
 };
