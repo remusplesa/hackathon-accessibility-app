@@ -1,9 +1,6 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useContext, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form';
 import { StepsContext } from '../../Context/StepsContext/StepsContext';
 import { UploadFormContext } from '../../Context/UploadFormContext/UploadFormContext';
-import * as yup from "yup";
 import ImagePredictionCard from '../../components/ImagePredictionCard/ImagePredictionCard';
 import { Flex, Button, Spinner, Text } from '@chakra-ui/react';
 import { usePredict } from '../../logic/hooks/usePredict';
@@ -15,7 +12,7 @@ import { uploadToAzure } from '../../utils/utils';
 
 export function ImagePredictForm() {
     const { currentStep, setCurrentStep, totalSteps } = useContext(StepsContext);
-    const { formData: { imageRaw, imageBase64 } } = useContext(UploadFormContext)
+    const { formData: { imageRaw, imageBase64 }, saveData } = useContext(UploadFormContext)
     const { getUploadUrl, loading: loadingUploadUrl } = useUploadUrl();
     const [submitting, setSubmitting] = useState(false)
     const { data, loading, error } = usePredict(imageRaw);
@@ -24,13 +21,15 @@ export function ImagePredictForm() {
     const onSubmit = async () => {
 
         const imageArr = Array.from(imageRaw)
+        const imageURLs: string[] = []
         setSubmitting(true)
         for (const img of imageArr) {
 
             const imgUrl = await getUploadUrl({ fileName: img.name })
             await uploadToAzure(imgUrl.data.getUploadLink.url, img)
-
+            imageURLs.push(imgUrl.data.getUploadLink.url)
         }
+        saveData({ imageUrl: imageURLs, predictions: predictions })
         setSubmitting(false)
 
         setCurrentStep(currentStep + 1)
@@ -51,7 +50,7 @@ export function ImagePredictForm() {
                     </> :
                     <Flex gap={7} direction='column'>
                         {
-                            predictions && predictions.map((prediction, id) => <ImagePredictionCard predictionID={id} selectedFile={imageBase64[id]} predictions={prediction} key={`prediction_card_${id}`} />)
+                            imageRaw && Array.from(imageRaw).map((_image, id) => <ImagePredictionCard predictionID={id} selectedFile={imageBase64[id]} predictions={predictions[id]} key={`prediction_card_${id}`} />)
                         }
                     </Flex>
             }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext } from "react";
 import {
   Input,
   FormControl,
@@ -8,14 +8,12 @@ import {
   Flex,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { useUploadUrl } from "../../logic/hooks/useUploadUrl";
-import { convertBase64, resizeFile, uploadToAzure } from "../../utils/utils";
+import { convertBase64, resizeFile } from "../../utils/utils";
 import { StepsContext } from "../../Context/StepsContext/StepsContext";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { UploadFormContext } from "../../Context/UploadFormContext/UploadFormContext";
-import { percentToValue } from "@chakra-ui/utils";
 
 const FILE_SIZE = 2097152;
 const SUPPORTED_FORMATS = [
@@ -79,7 +77,14 @@ export function ImageUpload() {
         const fileBase64 = await convertBase64((resizedFile as File))
         imageBase64.push((fileBase64 as string))
       }
-      saveData({ imageRaw: dt.files, imageBase64 })
+      saveData({
+        imageRaw: dt.files,
+        imageBase64,
+        boundingBoxes: null,
+        imageUrl: null,
+        predictions: null,
+
+      })
       setCurrentStep(currentStep + 1)
     }
 

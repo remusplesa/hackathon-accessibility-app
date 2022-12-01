@@ -13,6 +13,7 @@ import "./UploadPage.styles.css";
 import { ImagePredictForm } from "../../forms/ImagePredictForm/ImagePredictForm";
 import { useContext } from "react";
 import { StepsContext } from "../../Context/StepsContext/StepsContext";
+import { FinalForm } from "../../forms/FinalForm/FinalForm";
 
 export const UploadPage = () => {
   const { currentStep } = useContext(StepsContext);
@@ -29,7 +30,7 @@ export const UploadPage = () => {
             backgroundColor={"gray.700"}
             borderRadius={10}
           >
-            Finished!
+            <FinalForm />
           </Box>
         )}
       >

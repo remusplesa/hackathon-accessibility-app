@@ -54,7 +54,7 @@ const ImagePredictionCard = memo(
                                     <>
                                         <Heading size='md'>Seems like this place doesn't have stairs or ramps </Heading>
                                         <Text>
-                                            You can add a new image or can continue with selected one
+                                            You can add a new image or if you think that this place is accessible insert a bounding box around ramp/stairs to help us identify it or you just can proceed to the next step
                                         </Text>
                                     </>
                                 }

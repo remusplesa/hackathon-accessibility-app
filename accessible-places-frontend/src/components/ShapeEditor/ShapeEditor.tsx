@@ -15,7 +15,7 @@ export function ShapeEditor({ selectedFile, predictions, predictionID }: Props) 
   const [rectangles, setRectangles] = useState<IRectangles[] | undefined>();
   const [edit, setEdit] = useState(false)
 
-  const { saveData, formData: { boundingBoxes } } = useContext(UploadFormContext)
+  const { saveData, formData: { boundingBoxes, imageRaw } } = useContext(UploadFormContext)
 
   const checkDeselect = (e: any) => {
 
@@ -35,10 +35,25 @@ export function ShapeEditor({ selectedFile, predictions, predictionID }: Props) 
   useEffect(() => {
     if (boundingBoxes && selectedFile) {
       setRectangles(boundingBoxes[predictionID])
+
+
     } else if (selectedFile && !boundingBoxes) {
-      getRectangles()
+      getRectangles();
     }
   }, [predictions])
+
+  useEffect(() => {
+    if (rectangles) {
+      if (boundingBoxes) {
+        let tempArr = boundingBoxes
+        tempArr[predictionID] = rectangles
+        saveData({ boundingBoxes: tempArr })
+      } else {
+        saveData({ boundingBoxes: [rectangles] })
+      }
+
+    }
+  }, [rectangles])
 
 
   const onSaveRect = () => {
