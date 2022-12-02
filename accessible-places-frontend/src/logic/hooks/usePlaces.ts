@@ -43,11 +43,13 @@ const ADD_PLACE = gql`
       url
       detections {
         id
-        xMax
-        xMin
-        yMax
-        yMin
-        label
+        xmax
+        xmin
+        ymax
+        ymin
+        name
+        class
+        confidence
       }
     }
     accesibilityDetails {

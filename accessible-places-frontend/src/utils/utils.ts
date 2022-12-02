@@ -64,12 +64,13 @@ export const convertCoortinatesToCanvas = (prediction: IPrediction) => {
   }
 }
 
-export const covertBoxToPrediction = (boundingBox: IRectangles[], prediction: IPrediction[]): IPrediction[] => {
+export const covertBoxToPrediction = (boundingBox: IRectangles[], prediction: IPrediction[]) => {
 
   return boundingBox.map((box, i) => {
     return {
       class: prediction[i].class,
       confidence: prediction[i].confidence,
+      id: `${prediction[i].name}_${prediction[i].ymin.toFixed(0)}_${prediction[i].ymax.toFixed(0)}`,
       name: prediction[i].name,
       xmax: box.width + box.x,
       xmin: box.x,
