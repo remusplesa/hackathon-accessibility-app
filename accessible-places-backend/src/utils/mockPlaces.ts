@@ -23,11 +23,11 @@ export const mockPlaces = (
             detections: [
               {
                 id: faker.datatype.uuid(),
-                xMax: faker.datatype.number({ min: 10, max: 600 }),
-                xMin: faker.datatype.number({ min: 10, max: 600 }),
-                yMax: faker.datatype.number({ min: 10, max: 600 }),
-                yMin: faker.datatype.number({ min: 10, max: 600 }),
-                label: faker.helpers.arrayElement(['stairs', 'ramp']),
+                xmax: faker.datatype.number({ min: 10, max: 600 }),
+                xmin: faker.datatype.number({ min: 10, max: 600 }),
+                ymax: faker.datatype.number({ min: 10, max: 600 }),
+                ymin: faker.datatype.number({ min: 10, max: 600 }),
+                name: faker.helpers.arrayElement(['stairs', 'ramp']),
               },
             ],
           });
