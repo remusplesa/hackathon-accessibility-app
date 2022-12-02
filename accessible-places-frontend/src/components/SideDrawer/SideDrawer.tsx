@@ -84,7 +84,7 @@ export const SideDrawer = (props: SideDrawerProps) => {
           <Button
           colorScheme="green"
           leftIcon={<AddIcon/>}
-          onClick={() => navigate(`/upload?lat=${props.coordinates?.lat}&lng=${props.coordinates?.lng}&poi=${props.poiName}`)}>Add a new place</Button>
+          onClick={() => navigate(`/upload?lat=${props.coordinates?.lat}&lng=${props.coordinates?.lng}&id=${props._id}`)}>Add a new place</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
