@@ -7,7 +7,14 @@ const GET_PLACES = gql`
     getPlaces (centerLat: $centerLat, centerLon: $centerLng, mocked: $mocked){
       poiName
       isAccessible
-      photoUrl
+      photos {
+        id
+        url        
+        detections {
+          id
+          label
+        }
+      }
       accesibilityDetails {
         parking
         elevator

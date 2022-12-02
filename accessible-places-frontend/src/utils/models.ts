@@ -50,13 +50,20 @@ export type Place = {
     _id: string;
     poiName: string;
     isAccessible: boolean;
-    photoUrl: string;
+    photos: {
+      id: string;
+      url: string;
+      detections: {
+        id: string;
+        label: string;
+      }[];
+    }[];
     accesibilityDetails?: {
-        parking: boolean;
-        elevator: boolean;
-    }
+      parking: boolean;
+      elevator: boolean;
+    };
     coordinates: {
-        lat: number;
-        lng: number;
-    }
-}
+      lat: number;
+      lng: number;
+    };
+  };
