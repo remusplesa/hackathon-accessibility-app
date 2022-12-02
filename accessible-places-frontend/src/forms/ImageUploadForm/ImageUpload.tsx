@@ -8,7 +8,7 @@ import {
   Flex,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { convertBase64, resizeFile } from "../../utils/utils";
+import { checkExistingImage, convertBase64, resizeFile } from "../../utils/utils";
 import { StepsContext } from "../../Context/StepsContext/StepsContext";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -53,12 +53,6 @@ export function ImageUpload() {
     }
   });
 
-  const checkExistingImage = (currentFormImages: FileList, contextImages: FileList) => {
-    return Array.from(currentFormImages).filter((img, id) => {
-      return contextImages.item(id)?.name === img.name
-    })
-
-  }
 
 
   const onSubmit = async (data) => {

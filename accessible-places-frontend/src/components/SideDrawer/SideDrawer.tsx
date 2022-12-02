@@ -25,7 +25,7 @@ export const SideDrawer = (props: SideDrawerProps) => {
   const navigate = useNavigate();
 
   return (
-    <Drawer size="md" isOpen={isOpen} placement="right" onClose={() =>{onClose(); setSelected(0)}}>
+    <Drawer size="md" isOpen={isOpen} placement="right" onClose={() => { onClose(); setSelected(0) }}>
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
@@ -59,7 +59,7 @@ export const SideDrawer = (props: SideDrawerProps) => {
               objectFit={"cover"}
               h={"20rem"}
               borderRadius="lg"
-              src={props.photos[selected]?.url }
+              src={props.photos[selected]?.url}
               alt="place-photo"
             />
             <Stack direction={"row"} spacing="1rem">
@@ -72,7 +72,7 @@ export const SideDrawer = (props: SideDrawerProps) => {
                   borderRadius='sm'
                   cursor="pointer"
                   onClick={() => setSelected(index)}
-                  border={selected===index ? '2px' : '0px'}
+                  border={selected === index ? '2px' : '0px'}
                   borderColor="green.500"
                 />
               ))}
@@ -82,9 +82,9 @@ export const SideDrawer = (props: SideDrawerProps) => {
 
         <DrawerFooter>
           <Button
-          colorScheme="green"
-          leftIcon={<AddIcon/>}
-          onClick={() => navigate(`/upload?lat=${props.coordinates?.lat}&lng=${props.coordinates?.lng}&id=${props._id}`)}>Add a new place</Button>
+            colorScheme="green"
+            leftIcon={<AddIcon />}
+            onClick={() => navigate(`/upload?lat=${props.coordinates?.lat}&lng=${props.coordinates?.lng}&poi=${props.poiName}`)}>Edit place info</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

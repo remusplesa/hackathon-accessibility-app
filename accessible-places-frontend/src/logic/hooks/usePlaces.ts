@@ -1,4 +1,4 @@
-import { gql, ApolloError, useLazyQuery } from "@apollo/client";
+import { gql, ApolloError, useLazyQuery, useMutation } from "@apollo/client";
 import { handleApolloError } from "../helpers/handleApolloError";
 import { Place } from "../../utils/models";
 
@@ -27,6 +27,42 @@ const GET_PLACES = gql`
     }
   }
 `;
+
+const ADD_PLACE = gql`
+  mutation AddPlace($options: PlaceInput!) {
+  addPlace(options: $options) {
+    poiName
+    isAccessible
+    createdBy
+    coordinates {
+      lat
+      lng
+    }
+    photos {
+      id
+      url
+      detections {
+        id
+        xMax
+        xMin
+        yMax
+        yMin
+        label
+      }
+    }
+    accesibilityDetails {
+      parking
+      elevator
+    }
+  }
+}
+`;
+
+export const useAddPlace = () => {
+  const [addPlace, { data, loading, error }] = useMutation(ADD_PLACE);
+
+  return { addPlace: (args: Place) => addPlace({ variables: { options: { ...args } } }), data, loading, error }
+}
 
 export const usePlaces = (): PlacesQueryResult => {
   const [getPlaces, { loading, data, error }] = useLazyQuery(GET_PLACES);

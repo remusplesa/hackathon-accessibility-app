@@ -64,6 +64,33 @@ export const convertCoortinatesToCanvas = (prediction: IPrediction) => {
   }
 }
 
+export const covertBoxToPrediction = (boundingBox: IRectangles[], prediction: IPrediction[]): IPrediction[] => {
+
+  return boundingBox.map((box, i) => {
+    return {
+      class: prediction[i].class,
+      confidence: prediction[i].confidence,
+      name: prediction[i].name,
+      xmax: box.width + box.x,
+      xmin: box.x,
+      ymax: box.height + box.y,
+      ymin: box.y
+    }
+  })
+
+}
+export const checkAccessibility = (predictions: IPrediction[][]) => {
+
+  const check = predictions.filter(prediction => prediction.length > 0 && prediction.filter(pred => pred.name === 'ramp').length > 0)
+  return check.length > 0 ? true : false
+}
+export const checkExistingImage = (currentFormImages: FileList, contextImages: FileList) => {
+  return Array.from(currentFormImages).filter((img, id) => {
+    return contextImages.item(id)?.name === img.name
+  })
+
+}
+
 class Resizer {
   static changeHeightWidth(
     height: number,
