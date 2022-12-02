@@ -48,7 +48,6 @@ export function ImagePredictForm() {
         }
         saveData({ imageUrl: imageURLs, predictions: predictions })
         await addPlace({
-            _id: `${poiName}_${uuidv4()}`,
             coordinates,
             createdBy: displayName,
             isAccessible: checkAccessibility(predictions),
