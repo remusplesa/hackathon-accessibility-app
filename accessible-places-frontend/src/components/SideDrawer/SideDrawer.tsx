@@ -15,12 +15,14 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { CheckIcon, WarningIcon, AddIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 import { useSideDrawerContext } from "../../Context/SideDrawerContext/SideDrawerContext";
 import { Place } from "../../utils/models";
 
 export const SideDrawer = (props: SideDrawerProps) => {
   const { isOpen, onClose } = useSideDrawerContext();
   const [selected, setSelected] = useState<number>(0);
+  const navigate = useNavigate();
 
   return (
     <Drawer size="md" isOpen={isOpen} placement="right" onClose={() =>{onClose(); setSelected(0)}}>
@@ -79,7 +81,10 @@ export const SideDrawer = (props: SideDrawerProps) => {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button colorScheme="green" leftIcon={<AddIcon/>}>Add a new place</Button>
+          <Button
+          colorScheme="green"
+          leftIcon={<AddIcon/>}
+          onClick={() => navigate(`/upload?lat=${props.coordinates?.lat}&lng=${props.coordinates?.lng}&poi=${props.poiName}`)}>Add a new place</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

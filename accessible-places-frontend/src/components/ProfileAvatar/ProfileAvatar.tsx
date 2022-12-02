@@ -23,7 +23,7 @@ export const ProfileAvatar = () => {
         />
       </MenuButton>
       <MenuList textAlign="center" p="10px">
-        <MenuItem to="/profile" pt="20px">User Profile</MenuItem>
+        <MenuItem to="/profile" pt="20px">{context?.currentUser?.displayName}</MenuItem>
         <LogoutButton />
       </MenuList>
     </Menu>
