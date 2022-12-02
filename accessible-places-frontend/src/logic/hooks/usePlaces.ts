@@ -13,7 +13,7 @@ const GET_PLACES = gql`
         url        
         detections {
           id
-          label
+          name
         }
       }
       accesibilityDetails {
