@@ -31,6 +31,7 @@
     "react-leaflet": "^4.1.0",
     "react-router-dom": "^6.4.3",
     "react-transition-group": "^4.4.5",
+    "uuid": "^9.0.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {

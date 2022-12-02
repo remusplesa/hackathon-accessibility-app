@@ -5,31 +5,56 @@ import ImagePredictionCard from '../../components/ImagePredictionCard/ImagePredi
 import { Flex, Button, Spinner, Text } from '@chakra-ui/react';
 import { usePredict } from '../../logic/hooks/usePredict';
 import { PredictionContext } from '../../Context/PredictionContext/PredictionContext';
-import { PredictionContextType } from '../../utils/models';
+import { IPrediction, PredictionContextType } from '../../utils/models';
 import { useUploadUrl } from '../../logic/hooks/useUploadUrl';
-import { uploadToAzure } from '../../utils/utils';
-
+import { checkAccessibility, covertBoxToPrediction, uploadToAzure } from '../../utils/utils';
+import { useAddPlace } from '../../logic/hooks/usePlaces';
+import { AuthContext } from '../../components/AuthProvider';
+import { v4 as uuidv4 } from 'uuid';
 
 export function ImagePredictForm() {
     const { currentStep, setCurrentStep, totalSteps } = useContext(StepsContext);
-    const { formData: { imageRaw, imageBase64 }, saveData } = useContext(UploadFormContext)
+    const { formData: { imageRaw, imageBase64, coordinates, poiName, boundingBoxes }, saveData } = useContext(UploadFormContext)
     const { getUploadUrl, loading: loadingUploadUrl } = useUploadUrl();
     const [submitting, setSubmitting] = useState(false)
     const { data, loading, error } = usePredict(imageRaw);
     const { predictions, savePredictions } = useContext(PredictionContext) as PredictionContextType
+    const { addPlace, data: addPlaceData, error: addPlaceErr, loading: addPlaceLoading } = useAddPlace();
+    const { currentUser: { displayName } } = useContext(AuthContext);
+
+
 
     const onSubmit = async () => {
 
         const imageArr = Array.from(imageRaw)
         const imageURLs: string[] = []
+        const photos: {
+            id: string;
+            url: string;
+            detections: IPrediction[];
+        }[] = []
+
         setSubmitting(true)
-        for (const img of imageArr) {
+        for (const [index, img] of imageArr.entries()) {
 
             const imgUrl = await getUploadUrl({ fileName: img.name })
             await uploadToAzure(imgUrl.data.getUploadLink.url, img)
+            photos.push({
+                id: `${poiName}_photo_${index}`,
+                url: imgUrl.data.getUploadLink.url,
+                detections: covertBoxToPrediction(boundingBoxes[index], predictions[index])
+            })
             imageURLs.push(imgUrl.data.getUploadLink.url)
         }
         saveData({ imageUrl: imageURLs, predictions: predictions })
+        await addPlace({
+            _id: `${poiName}_${uuidv4()}`,
+            coordinates,
+            createdBy: displayName,
+            isAccessible: checkAccessibility(predictions),
+            photos,
+            poiName,
+        })
         setSubmitting(false)
 
         setCurrentStep(currentStep + 1)
@@ -63,7 +88,7 @@ export function ImagePredictForm() {
                     Prev
                 </Button>
                 <Button
-                    isLoading={submitting}
+                    isLoading={submitting || addPlaceLoading}
                     onClick={() => onSubmit()}
                     colorScheme='green'
                     loadingText='Submitting'

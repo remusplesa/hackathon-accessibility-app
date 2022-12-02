@@ -11,13 +11,32 @@ import { Steps } from "../../components/Steps/Steps";
 import { Box } from "@chakra-ui/react";
 import "./UploadPage.styles.css";
 import { ImagePredictForm } from "../../forms/ImagePredictForm/ImagePredictForm";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { StepsContext } from "../../Context/StepsContext/StepsContext";
 import { FinalForm } from "../../forms/FinalForm/FinalForm";
-
+import { useSearchParams } from "react-router-dom";
+import { UploadFormContext } from "../../Context/UploadFormContext/UploadFormContext";
+import { PlaceNameForm } from "../../forms/PlaceNameForm/PlaceNameForm";
 export const UploadPage = () => {
   const { currentStep } = useContext(StepsContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { saveData } = useContext(UploadFormContext)
 
+  useEffect(() => {
+    const lat = Number(searchParams.get('lat'))
+    const lng = Number(searchParams.get('lng'))
+    const poiName = searchParams.get('poi')
+
+    if (lat && lng) {
+      saveData({
+        poiName: poiName ?? '',
+        coordinates: {
+          lat,
+          lng
+        }
+      })
+    }
+  }, [])
   return (
     <SimpleGrid columns={{ sm: 1, md: 1 }} spacing={10} className="steps-grid">
       <Steps
@@ -42,9 +61,19 @@ export const UploadPage = () => {
           backgroundColor={"gray.700"}
           borderRadius={10}
         >
-          <ImageUpload />
+          <PlaceNameForm />
         </Box>}
         {currentStep === 1 && <Box
+          p={8}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          backgroundColor={"gray.700"}
+          borderRadius={10}
+        >
+          <ImageUpload />
+        </Box>}
+        {currentStep === 2 && <Box
           display="flex"
           justifyContent="center"
           alignItems="center"
