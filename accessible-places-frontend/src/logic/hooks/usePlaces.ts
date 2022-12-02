@@ -5,6 +5,7 @@ import { Place } from "../../utils/models";
 const GET_PLACES = gql`
   query GET_PLACES($centerLat: Float!, $centerLng: Float!, $mocked: Boolean) {
     getPlaces (centerLat: $centerLat, centerLon: $centerLng, mocked: $mocked){
+      _id
       poiName
       isAccessible
       photos {
