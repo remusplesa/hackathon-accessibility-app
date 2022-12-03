@@ -106,7 +106,7 @@ export const MapPage = memo(() => {
     debouncer({
       centerLat: center?.lat || DEFAULT_CENTER[0],
       centerLng: center?.lng || DEFAULT_CENTER[1],
-      mocked: true,
+      mocked: false,
     });
   }, [center]);
 

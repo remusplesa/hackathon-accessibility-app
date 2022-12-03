@@ -12,8 +12,11 @@ import {
 import Wallpaper from '../../assets/wallpaper.svg'
 import TransparentMap from '../../assets/map-transparent.svg'
 import { PulsePin } from '../../components/PulsePin/PulsePin';
+import { useNavigate } from 'react-router-dom';
 
 export function HomePage() {
+    const navigate = useNavigate();
+
     return (
 
         <Container maxW={'7xl'} position='relative' overflow={"hidden"}>
@@ -50,7 +53,14 @@ export function HomePage() {
                         </Text>
                     </Heading>
                     <Text zIndex={2}>
-                        Aenean eu nunc id risus ultricies porttitor vitae nec nibh. Donec at nibh sit amet magna finibus malesuada at in diam. Proin ac dictum lectus. Proin mattis eu nisl eu sagittis. Etiam blandit venenatis lacus, et varius nulla ultrices id. Suspendisse potenti. Donec accumsan sollicitudin elit non vestibulum.
+                        Accessible places is a web platform that supports persons with disabilities in planning their next
+                        trip through the city. Based on users' input, together with the output from an A.I. system,
+                        locations of public interest such as hospitals, post offices, schools and so on are rated based on
+                        their accessibility features. For example, a location having an access ramp is considered "Accessible",
+                        while a location that only has stairs is labeled as being less accessible.
+                        The goal is to help both users and institutions and, as a result, users keep track of
+                        locations that they can easily visit while institutions are aware of their accessibility rating,
+                        allowing them to improve it by taking the necessary actions.
                     </Text>
                     <Stack
                         spacing={{ base: 4, sm: 6 }}
@@ -62,7 +72,7 @@ export function HomePage() {
                             px={6}
                             color={["#4a9f66", "#4a9f66", "white", "white"]}
                             bg={["white", "white", "#4a9f66", "#397d50"]}
-
+                            onClick={() => navigate('/map')}
                         >
                             Get started
                         </Button>
