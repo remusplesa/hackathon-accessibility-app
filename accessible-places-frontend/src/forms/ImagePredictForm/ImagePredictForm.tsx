@@ -5,7 +5,7 @@ import ImagePredictionCard from '../../components/ImagePredictionCard/ImagePredi
 import { Flex, Button, Spinner, Text } from '@chakra-ui/react';
 import { usePredict } from '../../logic/hooks/usePredict';
 import { PredictionContext } from '../../Context/PredictionContext/PredictionContext';
-import { IPrediction, Place, PredictionContextType } from '../../utils/models';
+import { BLOB_BASE_URL, IPrediction, Place, PredictionContextType } from '../../utils/models';
 import { useUploadUrl } from '../../logic/hooks/useUploadUrl';
 import { checkAccessibility, covertBoxToPrediction, uploadToAzure } from '../../utils/utils';
 import { useAddPlace, useUpdatePlace } from '../../logic/hooks/usePlaces';
@@ -41,8 +41,8 @@ export function ImagePredictForm() {
             const imgUrl = await getUploadUrl({ fileName: img.name })
             await uploadToAzure(imgUrl.data.getUploadLink.url, img)
             photos.push({
-                id: `${poiName}_photo_${index}`,
-                url: imgUrl.data.getUploadLink.url,
+                id: `${poiName}_photo_${uuidv4()}`,
+                url: `${BLOB_BASE_URL}/${img.name}`,
                 detections: covertBoxToPrediction(boundingBoxes[index], predictions[index])
             })
             imageURLs.push(imgUrl.data.getUploadLink.url)
@@ -63,7 +63,18 @@ export function ImagePredictForm() {
                     return {
                         id: photo.id,
                         url: photo.url,
-                        detections: photo.detections
+                        detections: photo.detections.map(detection => {
+                            return {
+                                id: detection.id,
+                                xmin: detection.xmin,
+                                xmax: detection.xmax,
+                                ymin: detection.ymin,
+                                ymax: detection.ymax,
+                                confidence: detection.confidence,
+                                class: detection.class,
+                                name: detection.name
+                            }
+                        })
                     }
                 }), ...photos],
                 poiName,

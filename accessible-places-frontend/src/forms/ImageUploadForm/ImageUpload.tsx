@@ -92,15 +92,15 @@ export function ImageUpload() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {history.state.usr?.photos?.lenght > 0 &&
-        <Flex>
+      {history.state.usr?.photos?.length > 0 &&
+        <Flex direction={'column'} gap={3}>
           <Text>
             Existing images
           </Text>
           <Flex justifyContent={'space-between'} wrap={'wrap'} alignItems='center' gap={3} paddingBottom={5}>
-            {(history.state.usr as Pick<Place, 'photos'>)?.photos?.map(photo =>
+            {(history.state.usr as Pick<Place, 'photos'>)?.photos?.map((photo, i) =>
               <Image
-                key={photo.id}
+                key={`${photo.id}_${i}`}
                 crossOrigin='anonymous'
                 src={photo.url}
                 fallbackSrc='https://via.placeholder.com/150'

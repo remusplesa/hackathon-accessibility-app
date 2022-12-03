@@ -10,13 +10,19 @@ const GET_PLACES = gql`
       createdBy
       isAccessible
       photos {
-        id
-        url        
         detections {
+          class
+          confidence
           id
           name
+          xmax
+          xmin
+          ymax
+          ymin
         }
-      }
+        id
+        url
+    }
       accesibilityDetails {
         parking
         elevator
