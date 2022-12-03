@@ -13,13 +13,13 @@ import Wallpaper from '../../assets/wallpaper.svg'
 import TransparentMap from '../../assets/map-transparent.svg'
 import { PulsePin } from '../../components/PulsePin/PulsePin';
 import { useNavigate } from 'react-router-dom';
-
+import { useMediaQuery } from '@chakra-ui/react'
 export function HomePage() {
     const navigate = useNavigate();
-
+    const [isMobileL] = useMediaQuery('(max-width: 425px)')
     return (
 
-        <Container maxW={'7xl'} position='relative' overflow={"hidden"}>
+        <Container maxW={'7xl'} position='relative' >
             <Stack
                 align={'center'}
                 spacing={{ base: 8, md: 10 }}
@@ -92,6 +92,7 @@ export function HomePage() {
                     justify={'center'}
                     align={'center'}
                     position={'relative'}
+                    display={isMobileL ? 'none' : 'flex'}
                 >
                     <Image
                         alt={'Hero Image'}
