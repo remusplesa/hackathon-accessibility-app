@@ -5,10 +5,10 @@ import ImagePredictionCard from '../../components/ImagePredictionCard/ImagePredi
 import { Flex, Button, Spinner, Text } from '@chakra-ui/react';
 import { usePredict } from '../../logic/hooks/usePredict';
 import { PredictionContext } from '../../Context/PredictionContext/PredictionContext';
-import { IPrediction, PredictionContextType } from '../../utils/models';
+import { IPrediction, Place, PredictionContextType } from '../../utils/models';
 import { useUploadUrl } from '../../logic/hooks/useUploadUrl';
 import { checkAccessibility, covertBoxToPrediction, uploadToAzure } from '../../utils/utils';
-import { useAddPlace } from '../../logic/hooks/usePlaces';
+import { useAddPlace, useUpdatePlace } from '../../logic/hooks/usePlaces';
 import { AuthContext } from '../../components/AuthProvider';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -19,7 +19,8 @@ export function ImagePredictForm() {
     const [submitting, setSubmitting] = useState(false)
     const { data, loading, error } = usePredict(imageRaw);
     const { predictions, savePredictions } = useContext(PredictionContext) as PredictionContextType
-    const { addPlace, data: addPlaceData, error: addPlaceErr, loading: addPlaceLoading } = useAddPlace();
+    const { addPlace, loading: addPlaceLoading } = useAddPlace();
+    const { updatePlace, loading: updatePlaceLoading } = useUpdatePlace();
     const { currentUser: { displayName } } = useContext(AuthContext);
 
 
@@ -47,13 +48,36 @@ export function ImagePredictForm() {
             imageURLs.push(imgUrl.data.getUploadLink.url)
         }
         saveData({ imageUrl: imageURLs, predictions: predictions })
-        await addPlace({
-            coordinates,
-            createdBy: displayName,
-            isAccessible: checkAccessibility(predictions),
-            photos,
-            poiName,
-        })
+
+        if (history.state.usr) {
+            const historyState = (history.state.usr as Partial<Place>)
+            await updatePlace({
+                _id: historyState?._id,
+                coordinates: {
+                    lat: historyState?.coordinates.lat,
+                    lng: historyState?.coordinates.lng
+                },
+                createdBy: historyState?.createdBy,
+                isAccessible: historyState.isAccessible || checkAccessibility(predictions),
+                photos: [...historyState.photos.map(photo => {
+                    return {
+                        id: photo.id,
+                        url: photo.url,
+                        detections: photo.detections
+                    }
+                }), ...photos],
+                poiName,
+            })
+        } else {
+            await addPlace({
+                coordinates,
+                createdBy: displayName,
+                isAccessible: checkAccessibility(predictions),
+                photos,
+                poiName,
+            })
+        }
+
         setSubmitting(false)
 
         setCurrentStep(currentStep + 1)
@@ -87,7 +111,7 @@ export function ImagePredictForm() {
                     Prev
                 </Button>
                 <Button
-                    isLoading={submitting || addPlaceLoading}
+                    isLoading={submitting || loadingUploadUrl || addPlaceLoading || updatePlaceLoading}
                     onClick={() => onSubmit()}
                     colorScheme='green'
                     loadingText='Submitting'

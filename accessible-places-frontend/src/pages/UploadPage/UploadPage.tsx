@@ -14,13 +14,14 @@ import { ImagePredictForm } from "../../forms/ImagePredictForm/ImagePredictForm"
 import { useContext, useEffect } from "react";
 import { StepsContext } from "../../Context/StepsContext/StepsContext";
 import { FinalForm } from "../../forms/FinalForm/FinalForm";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { UploadFormContext } from "../../Context/UploadFormContext/UploadFormContext";
 import { PlaceNameForm } from "../../forms/PlaceNameForm/PlaceNameForm";
 export const UploadPage = () => {
   const { currentStep } = useContext(StepsContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const { saveData } = useContext(UploadFormContext)
+  const navigate = useNavigate();
 
   useEffect(() => {
     const lat = Number(searchParams.get('lat'))
@@ -35,6 +36,10 @@ export const UploadPage = () => {
           lng
         }
       })
+    }
+
+    if (!lat || !lng) {
+      navigate('/map')
     }
   }, [])
   return (

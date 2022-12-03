@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Input,
   FormControl,
@@ -7,6 +7,11 @@ import {
   Button,
   Flex,
   FormErrorMessage,
+  Card,
+  CardBody,
+  Image,
+  AspectRatio,
+  Text
 } from "@chakra-ui/react";
 import { checkExistingImage, convertBase64, resizeFile } from "../../utils/utils";
 import { StepsContext } from "../../Context/StepsContext/StepsContext";
@@ -14,6 +19,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { UploadFormContext } from "../../Context/UploadFormContext/UploadFormContext";
+import { Place } from "../../utils/models";
 
 const FILE_SIZE = 2097152;
 const SUPPORTED_FORMATS = [
@@ -26,7 +32,7 @@ const schema = yup.object().shape({
     .test("fileSize",
       "File too large",
       value => {
-        const filesArray = Array.from((value as FileList))
+        const filesArray = Array.from((value as FileList) ?? [])
         const invalidFile = filesArray?.filter(item => item.size > FILE_SIZE)
         return invalidFile.length === 0
       }
@@ -35,7 +41,7 @@ const schema = yup.object().shape({
       "fileFormat",
       "Unsupported Format",
       value => {
-        const filesArray = Array.from((value as FileList))
+        const filesArray = Array.from((value as FileList) ?? [])
         const invalidFile = filesArray?.filter(item => !SUPPORTED_FORMATS.includes(item.type))
         return invalidFile.length === 0
       }
@@ -49,10 +55,9 @@ export function ImageUpload() {
   const { register, handleSubmit, formState: { errors, touchedFields, isValid, isSubmitSuccessful } } = useForm({
     resolver: yupResolver(schema), mode: "all",
     defaultValues: {
-      imageRaw: formData?.imageRaw
+      imageRaw: formData?.imageRaw || null
     }
   });
-
 
 
   const onSubmit = async (data) => {
@@ -87,6 +92,25 @@ export function ImageUpload() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {history.state.usr?.photos?.lenght > 0 &&
+        <Flex>
+          <Text>
+            Existing images
+          </Text>
+          <Flex justifyContent={'space-between'} wrap={'wrap'} alignItems='center' gap={3} paddingBottom={5}>
+            {(history.state.usr as Pick<Place, 'photos'>)?.photos?.map(photo =>
+              <Image
+                key={photo.id}
+                crossOrigin='anonymous'
+                src={photo.url}
+                fallbackSrc='https://via.placeholder.com/150'
+                alt={photo.id}
+                objectFit='cover'
+              />
+            )}
+          </Flex>
+        </Flex>
+      }
       <FormControl isInvalid={errors.imageRaw && touchedFields.imageRaw}>
         <FormLabel >Choose one or multiple JPG/JPEG images</FormLabel>
         <Input

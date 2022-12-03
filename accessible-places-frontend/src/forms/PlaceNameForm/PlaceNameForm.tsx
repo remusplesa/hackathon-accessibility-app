@@ -14,7 +14,6 @@ export const PlaceNameForm = () => {
     const { currentStep, setCurrentStep, totalSteps } = useContext(StepsContext);
     const { formData, saveData } = useContext(UploadFormContext)
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
 
     const { register, handleSubmit, formState: { errors, touchedFields, isValid, isSubmitSuccessful } } = useForm({
         resolver: yupResolver(schema), mode: "all",
@@ -23,14 +22,6 @@ export const PlaceNameForm = () => {
         }
     });
 
-    useEffect(() => {
-        const lat = Number(searchParams.get('lat'))
-        const lng = Number(searchParams.get('lng'))
-
-        if (!lat || !lng) {
-            navigate('/map')
-        }
-    }, [])
 
     const onSubmit = async (data) => {
         const { poiName } = data

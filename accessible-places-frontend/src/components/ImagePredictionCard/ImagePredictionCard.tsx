@@ -25,7 +25,7 @@ const ImagePredictionCard = memo(
                                     predictions &&
                                     <>
                                         <Heading size='md'>Accessibility predictions</Heading>
-                                        <Flex justifyContent={'space-between'}>
+                                        <Flex justifyContent={'space-between'} wrap='wrap'>
                                             {predictions?.map((prediction) => {
                                                 return (
                                                     <Box
