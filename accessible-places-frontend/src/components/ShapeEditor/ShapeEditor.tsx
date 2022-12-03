@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Tooltip } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { Stage, Layer, Image } from "react-konva";
 import { UploadFormContext } from "../../Context/UploadFormContext/UploadFormContext";
@@ -108,7 +108,9 @@ export function ShapeEditor({ selectedFile, predictions, predictionID }: Props) 
         </Stage>
       )}
       <Flex justifyContent={'space-between'}>
-        <Button disabled={edit} onClick={() => setEdit(true)}>Edit</Button>
+        <Tooltip label='Edit bounding boxes, you can delete one by pressing delete key' >
+          <Button disabled={edit} onClick={() => setEdit(true)}>Edit</Button>
+        </Tooltip>
         <Button disabled={!edit} onClick={() => onSaveRect()}>Save</Button>
 
       </Flex>
