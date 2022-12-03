@@ -1,4 +1,5 @@
 export interface IPrediction {
+  id: string;
   xmin: number;
   xmax: number;
   ymin: number;
@@ -45,6 +46,7 @@ export interface IRectangles {
 
 export const RAMP_COLOR = '#48BB78'
 export const STAIRS_COLOR = '#C53030'
+export const BLOB_BASE_URL = 'https://accessibilityphotos.blob.core.windows.net/photos-container'
 
 export type Place = {
   _id?: string;
