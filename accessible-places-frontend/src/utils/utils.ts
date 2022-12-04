@@ -1,5 +1,5 @@
 import React from "react";
-import { IPrediction, RAMP_COLOR, STAIRS_COLOR } from "./models";
+import { IPrediction, IRectangles, RAMP_COLOR, STAIRS_COLOR } from "./models";
 
 export const convertBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
@@ -62,6 +62,34 @@ export const convertCoortinatesToCanvas = (prediction: IPrediction) => {
     id: `${prediction.name}_${prediction.ymin.toFixed(0)}_${prediction.ymax.toFixed(0)}`,
 
   }
+}
+
+export const covertBoxToPrediction = (boundingBox: IRectangles[], prediction: IPrediction[]) => {
+
+  return boundingBox.map((box, i) => {
+    return {
+      class: prediction[i].class,
+      confidence: prediction[i].confidence,
+      id: `${prediction[i].name}_${prediction[i].ymin.toFixed(0)}_${prediction[i].ymax.toFixed(0)}`,
+      name: prediction[i].name,
+      xmax: box.width + box.x,
+      xmin: box.x,
+      ymax: box.height + box.y,
+      ymin: box.y
+    }
+  })
+
+}
+export const checkAccessibility = (predictions: IPrediction[][]) => {
+
+  const check = predictions.filter(prediction => prediction.length > 0 && prediction.filter(pred => pred.name === 'ramp').length > 0)
+  return check.length > 0 ? true : false
+}
+export const checkExistingImage = (currentFormImages: FileList, contextImages: FileList) => {
+  return Array.from(currentFormImages).filter((img, id) => {
+    return contextImages.item(id)?.name === img.name
+  })
+
 }
 
 class Resizer {
@@ -293,3 +321,33 @@ export const resizeFile = (file: File) =>
       "file"
     );
   });
+
+export const uploadToAzure = async (imageUrl: string, imageRaw: File) => {
+  const fileReader = new FileReader();
+  fileReader.readAsArrayBuffer(imageRaw);
+
+  fileReader.onloadend = async (event) => {
+    const target = event.target;
+    if (target?.readyState == fileReader.DONE) {
+      var xhr = new XMLHttpRequest();
+      var requestData = new Uint8Array(target!.result as any);
+
+      xhr.open("PUT", imageUrl, true);
+      xhr.responseType = "blob";
+      xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+      xhr.setRequestHeader("X-File-Name", imageRaw.name);
+      xhr.setRequestHeader("x-ms-blob-type", "BlockBlob");
+      xhr.setRequestHeader(
+        "Content-Type",
+        imageRaw.type || "application/octet-stream"
+      );
+      xhr.setRequestHeader(
+        "x-ms-blob-content-type",
+        imageRaw.type || "application/octet-stream"
+      );
+      xhr.setRequestHeader("x-ms-version", "2016-05-31");
+
+      xhr.send(requestData);
+    }
+  };
+};

@@ -10,22 +10,30 @@ export class Detection {
 
   @Field()
   @prop({ required: true })
-  xMax!: number;
+  xmax!: number;
 
   @Field()
   @prop({ required: true })
-  xMin!: number;
+  xmin!: number;
 
   @Field()
   @prop({ required: true })
-  yMax!: number;
+  ymax!: number;
 
   @Field()
   @prop({ required: true })
-  yMin!: number;
+  ymin!: number;
 
   @Field()
-  @prop({required: true})
-  label!: string
+  @prop({ required: true })
+  confidence!: number;
+
+  @Field()
+  @prop({ required: true })
+  class!: number;
+
+  @Field()
+  @prop({ required: true })
+  name!: string
 }
 

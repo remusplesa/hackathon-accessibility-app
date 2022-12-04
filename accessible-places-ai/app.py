@@ -32,11 +32,16 @@ def stream_predict():
     if request.method != "POST":
         return
 
-    if request.files.get("image"):
+    if request.files:
+        
+        output=[]
+        for file in request.files:
+            im_bytes = request.files[file].read()
+            predictions=batch_predict(im_bytes)
+            if predictions :
+                output.append(predictions)
+            
 
-        im_file = request.files["image"]
-        im_bytes = im_file.read()
-        output=batch_predict(im_bytes)
         response=jsonify(output)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response

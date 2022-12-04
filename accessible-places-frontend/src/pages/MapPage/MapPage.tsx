@@ -18,6 +18,7 @@ import { Place } from "../../utils/models";
 import "./MapPage.styles.css";
 
 import { mapPin } from "../../components/MapPin/MapPin";
+import { useNavigate } from "react-router-dom";
 
 const DEFAULT_CENTER: LatLngExpression = [51.505, -0.09];
 
@@ -62,9 +63,11 @@ const MapLocationMarker = ({ onOpen, setCenter }: any) => {
 };
 
 const AddNewPlaceHandler = () => {
-  const map = useMapEvents({
+  const navigate = useNavigate();
+
+  useMapEvents({
     dblclick(e) {
-      alert(`Add place @ ${e.latlng}`);
+      navigate(`/upload?lat=${e.latlng.lat}&lng=${e.latlng.lng}`)
     },
   });
   return null;
@@ -103,7 +106,7 @@ export const MapPage = memo(() => {
     debouncer({
       centerLat: center?.lat || DEFAULT_CENTER[0],
       centerLng: center?.lng || DEFAULT_CENTER[1],
-      mocked: true,
+      mocked: false,
     });
   }, [center]);
 

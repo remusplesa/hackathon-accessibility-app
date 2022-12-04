@@ -7,6 +7,6 @@ export const mapPin = (isAccessible: boolean) => {
     iconUrl: isAccessible ? GreenPin : RedPin,
     iconRetinaUrl: isAccessible ? GreenPin : RedPin,
     tooltipAnchor: [16, -10],
-    iconSize: [24, 32],
+    iconSize: [24, 38],
   });
 };

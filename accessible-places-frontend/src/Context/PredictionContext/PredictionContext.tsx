@@ -5,7 +5,8 @@ export const PredictionContext = createContext<PredictionContextType | null>(nul
 
 //@ts-ignore
 export const PredictionProvider = ({ children }) => {
-  const [predictions, setPredictions] = useState<IPrediction[]>([{
+  const [predictions, setPredictions] = useState<IPrediction[][]>([[{
+    id: '',
     class: 0,
     confidence: 0,
     name: '',
@@ -13,10 +14,10 @@ export const PredictionProvider = ({ children }) => {
     xmin: 0,
     ymax: 0,
     ymin: 0
-  }])
+  }]])
 
-  const savePredictions = (prediction: IPrediction[]) => {
-    setPredictions([...prediction])
+  const savePredictions = (prediction: IPrediction[][]) => {
+    setPredictions(prediction)
   }
 
   return (

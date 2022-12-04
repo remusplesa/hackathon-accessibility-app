@@ -14,7 +14,7 @@ export class Photo {
   url!: string;
 
   @Field(() => [Detection], { nullable: true })
-  @prop()
-  detections!: Detection[];
+  @prop({ required: false })
+  detections: Detection[];
 }
 

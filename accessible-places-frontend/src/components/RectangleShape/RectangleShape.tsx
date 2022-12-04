@@ -5,12 +5,22 @@ import { IRectangles } from "../../utils/models";
 export const RectangleShape = ({
   shapeProps,
   isSelected,
+  dragable = false,
   onSelect,
   onChange,
+  onDelete,
 }: Props) => {
   const shapeRef: any = React.useRef();
   const trRef: any = React.useRef();
 
+  const handleKeyDown = (event) => {
+    const key = event.key
+    if (isSelected) {
+      if (key === "Backspace" || key === "Delete") {
+        onDelete()
+      }
+    }
+  };
   React.useEffect(() => {
     if (isSelected) {
       // we need to attach transformer manually
@@ -19,6 +29,14 @@ export const RectangleShape = ({
     }
   }, [isSelected]);
 
+  React.useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  })
+
   return (
     <React.Fragment>
       <Label x={shapeProps.x} y={shapeProps.y}>
@@ -26,11 +44,13 @@ export const RectangleShape = ({
         <Text text={shapeProps.id} />
       </Label>
       <Rect
+        on
         onClick={onSelect}
         onTap={onSelect}
         ref={shapeRef}
+        visible
         {...shapeProps}
-        draggable
+        draggable={dragable}
         onDragEnd={(e) => {
           const node: any = shapeRef.current;
           if (node) {
@@ -69,7 +89,7 @@ export const RectangleShape = ({
         }}
       />
 
-      {isSelected && (
+      {isSelected && dragable && (
         <Transformer
           ref={trRef}
           boundBoxFunc={(oldBox, newBox) => {
@@ -88,6 +108,8 @@ export const RectangleShape = ({
 type Props = {
   shapeProps: IRectangles;
   isSelected: boolean;
-  onSelect: (data: any) => void;
-  onChange: (data: any) => void;
+  dragable?: boolean
+  onSelect?: (data: any) => void;
+  onChange?: (data: any) => void;
+  onDelete?: () => void;
 };
