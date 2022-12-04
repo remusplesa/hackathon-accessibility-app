@@ -11,11 +11,12 @@
   ],
   "author": "Stack Attack Team",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && NODE_ENV=production tsc && babel src/lib --out-dir dist --copy-files",
     "preview": "vite preview",
     "build:vite": "tsc && vite build"
   },

@@ -1,1 +1,1 @@
-export const Trial = () => <div>Trial Component</div>;
+export const Trial: React.FC = () => <div>Trial Component</div>;
