@@ -1,0 +1,36 @@
+{
+  "name": "captcha-component-accessibility",
+  "description": "Captcha component for accessible places",
+  "keywords": [
+    "react",
+    "react-ts",
+    "typescript",
+    "captcha",
+    "accessibility",
+    "accessible"
+  ],
+  "author": "Stack Attack Team",
+  "private": false,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "rm -rf dist && NODE_ENV=production babel src/lib --out-dir dist --copy-files",
+    "preview": "vite preview",
+    "build:vite": "tsc && vite build"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "@vitejs/plugin-react": "^2.2.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.3"
+  }
+}
