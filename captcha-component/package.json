@@ -11,16 +11,21 @@
   ],
   "author": "Stack Attack Team",
   "private": false,
-  "version": "0.2.0",
-  "type": "module",
+  "version": "0.3.0",
+  "module": "./lib/esm/index.js",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
     "dev": "vite",
-    "clean": "rm -rf dist",
-    "build": "npm run clean && NODE_ENV=production tsc && babel src/lib --out-dir dist --copy-files",
-    "preview": "vite preview",
-    "build:vite": "tsc && vite build"
+    "clean": "rm -rf lib",
+    "copy:files": "copyfiles -e **/*.ts -e **/*.tsx -u 1 src/**/*.scss lib/esm/src",
+    "build": "npm run clean && tsc -p tsconfig.json && npm run copy:files",
+    "something": "tsc -p tsconfig.json",
+    "preview": "vite preview"
   },
   "dependencies": {
+    "copyfiles": "^2.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
