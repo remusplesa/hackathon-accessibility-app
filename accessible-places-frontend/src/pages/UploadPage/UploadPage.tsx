@@ -16,6 +16,8 @@ import { Steps } from "../../components/Steps/Steps";
 import { Box } from "@chakra-ui/react";
 import "./UploadPage.styles.css";
 
+import { CaptchaComponent } from "captcha-component-accessibility";
+
 export const UploadPage = () => {
   const [selectedFile, setSelectedFile] = useState<string>("");
 
@@ -79,6 +81,7 @@ export const UploadPage = () => {
           borderRadius={10}
         >
           Another Step - 2
+          <CaptchaComponent labelText="Hello From Captcha!" />
         </Box>
         <Box
           h={300}
