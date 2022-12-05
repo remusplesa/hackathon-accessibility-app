@@ -81,6 +81,7 @@ export function HomePage() {
                             size={'lg'}
                             fontWeight={'normal'}
                             px={6}
+                            onClick={() => navigate('/how')}
                         >
                             How It Works
                         </Button>
