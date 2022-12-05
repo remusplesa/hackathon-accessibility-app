@@ -20,7 +20,7 @@ export const LogoutButton = () => {
     <Button
       w={"full"}
       mt={8}
-      size={"lg"}
+      size={"sm"}
       py={"7"}
       rounded="md"
       color={["#4a9f66", "#4a9f66", "white", "white"]}
@@ -28,7 +28,6 @@ export const LogoutButton = () => {
       _hover={{
         bg: ["#67e491", "#67e491", "#397d50", "#397d50"],
       }}
-      textTransform={"uppercase"}
       onClick={handleLogout}
     >
       LogOut
