@@ -6,11 +6,13 @@ import { UploadPage } from "./pages/UploadPage/UploadPage";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import { HomePage } from "./pages/HomePage/HomePage";
 import { ProfilePage } from "./pages/ProfilePage/ProfilePage";
+import HowItWorks from "./pages/HowItWorks/HowItWorks";
 
 export function AppRouter() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/how" element={<HowItWorks />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/upload" element={<PrivateRoute />}>
         <Route path="/upload" element={<UploadPage />} />
