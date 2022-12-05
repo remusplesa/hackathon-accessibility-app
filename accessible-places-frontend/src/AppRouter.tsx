@@ -17,9 +17,7 @@ export function AppRouter() {
       <Route path="/upload" element={<PrivateRoute />}>
         <Route path="/upload" element={<UploadPage />} />
       </Route>
-      <Route path="/map" element={<PrivateRoute />}>
-        <Route path="/map" element={<MapPage />} />
-      </Route>
+      <Route path="/map" element={<MapPage />} />
       <Route path="/profile" element={<PrivateRoute />}>
         <Route path="/profile" element={<ProfilePage />} />
       </Route>
