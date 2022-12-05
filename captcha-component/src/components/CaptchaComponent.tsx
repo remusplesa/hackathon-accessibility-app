@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 interface Props {
-  // labelText: string;
+  labelText?: string;
+  setIsValid: (e: any) => void;
 }
 
 const options = {
@@ -30,9 +31,9 @@ const options = {
   },
 };
 
-export const CaptchaComponent: React.FC<Props> = (): JSX.Element => {
+export const CaptchaComponent: React.FC<Props> = ({setIsValid}): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true);
-  const [isValid, setIsValid] = useState(false);
+  const [isOk, setIsOk] = useState(false);
   const [challenge, setChallenge] = useState<ChallengeResponse>();
 
   useEffect(() => {
@@ -46,14 +47,28 @@ export const CaptchaComponent: React.FC<Props> = (): JSX.Element => {
     setIsLoading(false);
   }, []);
 
+  function verify() {
+    console.log('Verify challenge data')
+    // todo: call the other endpoint
+
+    // todo: check response -> res.data.ok === true ?
+    setIsValid(true);
+    setIsOk(true);
+  }
+
+  if (isOk) {
+    return <h3>All good, not a robot</h3>
+  }
+
   return (
     <>
       {isLoading ? (
         "Loading..."
       ) : (
-        <input required>
+        <div>
           <pre>{JSON.stringify(challenge, null, 2)}</pre>
-        </input>
+          <button type="button" onClick={() => verify()}>ok</button>
+        </div>
       )}
     </>
   );
