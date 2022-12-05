@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 
 export const LogoutButton = () => {
-  console.log("-- logut button ");
   const navigate = useNavigate();
   const handleLogout = async () => {
-    signOut(auth).then((response) => {
+    signOut(auth)
+      .then((response) => {
         console.log("This: logout", response);
         navigate("/");
       })
@@ -15,8 +15,7 @@ export const LogoutButton = () => {
         console.log("Auth failed with:", err);
         navigate("/");
       });
-
-  }
+  };
   return (
     <Button
       w={"full"}

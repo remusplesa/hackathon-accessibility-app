@@ -6,7 +6,6 @@ import { ProfileAvatar } from "../ProfileAvatar/ProfileAvatar";
 
 export const MenuLinks = ({ isOpen }: Props) => {
   const context = useContext(AuthContext);
-  console.log("--- context din auth ", context);
   const isLogged: boolean =
     context?.currentUser?.displayName && context.currentUser.displayName !== "";
   return (
@@ -17,8 +16,8 @@ export const MenuLinks = ({ isOpen }: Props) => {
       <Stack
         spacing={8}
         align="center"
-        justify={["center", "space-between", "flex-end", "flex-end"]}
-        direction={["column", "row", "row", "row"]}
+        justify={["center", "center", "flex-end", "flex-end"]}
+        direction={["column", "column", "row", "row"]}
         pt={[4, 4, 0, 0]}
       >
         <MenuItem to="/">Home</MenuItem>
