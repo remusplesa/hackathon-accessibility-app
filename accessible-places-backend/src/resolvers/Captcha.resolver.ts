@@ -1,5 +1,5 @@
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
-import { PlaceModel, PlaceResult } from '../models';
+import { PlaceModel, PlaceResult, Photo } from '../models';
 import { faker } from '@faker-js/faker';
 import { mockPlaces } from '../utils/mockPlaces';
 import { Captcha, CaptchaSolution } from '../models/Captcha';
@@ -28,7 +28,7 @@ class CaptchaResolver {
 
     const randomPlace = randomPlaces[0];
 
-    const photos = randomPlace.photos;
+    const photos: Photo[] = randomPlace.photos;
     const randomPhoto = photos[Math.floor(Math.random() * photos.length)];
 
     const detections = randomPhoto.detections;
@@ -40,6 +40,7 @@ class CaptchaResolver {
     ).toString('base64');
     return {
       quizzId,
+      photoUrl: randomPhoto.url,
       challenge: randomDetection,
     };
   }
