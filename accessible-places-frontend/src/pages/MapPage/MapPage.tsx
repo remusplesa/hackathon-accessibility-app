@@ -1,4 +1,4 @@
-import { LatLngExpression, circle } from "leaflet";
+import { LatLngExpression } from "leaflet";
 import { memo, useCallback, useEffect, useState } from "react";
 import {
   MapContainer,
@@ -9,16 +9,17 @@ import {
   Tooltip,
 } from "react-leaflet";
 import _ from "lodash";
+import { useNavigate } from "react-router-dom";
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton, Stack } from "@chakra-ui/react";
 
 import { SideDrawer } from "../../components/SideDrawer/SideDrawer";
 import { MyLocationPin } from "../../components/MyLocationPin/MyLocationPin";
+import { mapPin } from "../../components/MapPin/MapPin";
 import { useSideDrawerContext } from "../../Context/SideDrawerContext/SideDrawerContext";
 import { usePlaces } from "../../logic/hooks/usePlaces";
 import { Place } from "../../utils/models";
 import "./MapPage.styles.css";
 
-import { mapPin } from "../../components/MapPin/MapPin";
-import { useNavigate } from "react-router-dom";
 
 const DEFAULT_CENTER: LatLngExpression = [51.505, -0.09];
 
@@ -95,9 +96,10 @@ const PlaceMarker = memo(({ place, onOpen, select }: PlaceMarkerProps) => {
 });
 
 export const MapPage = memo(() => {
-  const { onOpen } = useSideDrawerContext();
   const [selected, setSelected] = useState<Place>();
   const [center, setCenter] = useState<{ lat: number; lng: number }>();
+  const [showGuide, setShowGuide] = useState(true);
+  const { onOpen } = useSideDrawerContext();
   const { getPlaces, data, loading, error } = usePlaces();
   const debouncer = useCallback(_.debounce(getPlaces, 100), []);
 
@@ -112,6 +114,20 @@ export const MapPage = memo(() => {
 
   return (
     <>
+      { showGuide && 
+        <Stack
+        position="fixed"
+        bottom={10}
+        opacity={99}
+        zIndex={999}>
+          <Alert status='info' variant='solid' bgColor={"green.200"}  zIndex={999}>
+            <AlertIcon />
+            <AlertTitle>Add a new pin on the map</AlertTitle>
+            <AlertDescription>Double Click a spot and follow the process</AlertDescription>
+            <CloseButton paddingLeft={2} onClick={() => setShowGuide(false)}/>
+          </Alert>
+        </Stack>
+      }
       <MapContainer
         center={DEFAULT_CENTER}
         zoom={13}
