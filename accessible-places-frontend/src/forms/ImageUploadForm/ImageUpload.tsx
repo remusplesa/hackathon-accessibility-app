@@ -21,7 +21,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { UploadFormContext } from "../../Context/UploadFormContext/UploadFormContext";
 import { Place } from "../../utils/models";
 
-const FILE_SIZE = 2097152;
+const FILE_SIZE = 10_485_760;
 const SUPPORTED_FORMATS = [
   "image/jpg",
   "image/jpeg"
