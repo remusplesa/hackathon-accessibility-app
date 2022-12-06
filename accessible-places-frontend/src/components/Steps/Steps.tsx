@@ -39,7 +39,7 @@ export const Steps = ({
         w={"100%"}
         alignItems="center"
         justifyContent="space-between"
-        paddingX={8}
+        padding={8}
       >
         {controllerItems.map((controllerItem, idx) => (
           <CSSTransition
