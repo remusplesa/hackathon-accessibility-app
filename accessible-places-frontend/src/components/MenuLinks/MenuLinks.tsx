@@ -22,7 +22,6 @@ export const MenuLinks = ({ isOpen }: Props) => {
       >
         <MenuItem to="/">Home</MenuItem>
         <MenuItem to="/map">Map</MenuItem>
-        <MenuItem to="/upload">Upload</MenuItem>
         {isLogged && <ProfileAvatar />}
         {!isLogged && (
           <MenuItem to="/login" isLast>
