@@ -4,9 +4,12 @@ import { Detection } from './Detection';
 @InputType('CaptchaInput')
 @ObjectType('CaptchaType')
 export class Captcha {
-  @Field({nullable: false})
+  @Field({ nullable: false })
   quizzId: string
-  
+
+  @Field()
+  photoUrl: string
+
   @Field()
   challenge: Detection
 }

@@ -24,12 +24,12 @@ export class Detection {
   @prop({ required: true })
   ymin!: number;
 
-  @Field()
-  @prop({ required: true })
+  @Field({ nullable: true })
+  @prop()
   confidence!: number;
 
-  @Field()
-  @prop({ required: true })
+  @Field({ nullable: true })
+  @prop()
   class!: number;
 
   @Field()
