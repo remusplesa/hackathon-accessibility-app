@@ -88,7 +88,7 @@ export const SideDrawer = (props: SideDrawerProps) => {
               `/upload?lat=${props.coordinates?.lat}&lng=${props.coordinates?.lng}&poi=${props.poiName}`,
               { state: props }
             )}
-          >Edit place info</Button>
+          >Add a new photo</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
