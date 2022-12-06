@@ -10,6 +10,7 @@ const HowItWorks = () => {
                 align={'center'}
                 spacing={{ base: 8, md: 10 }}
                 py={{ base: 20, md: 28 }}
+                px={{ sm: 3 }}
                 direction={{ base: 'column', md: 'row' }}>
                 <Stack flex={1} spacing={{ base: 5, md: 10 }} position={'relative'}>
 
@@ -41,26 +42,23 @@ const HowItWorks = () => {
                     <Text zIndex={2}>
                         To add or update a place images/description navigate to <Link href='map' textDecoration={'underline'}>map</Link>
                     </Text>
-                    <UnorderedList>
+                    <UnorderedList stylePosition={'inside'}>
                         <ListItem>
-                            <Text>To add a new place : </Text>
-                            <UnorderedList>
+                            To add a new place :
+                            <UnorderedList listStyleType={'circle'}>
                                 <ListItem>
-                                    <Text>
-                                        Double click on the map and it will redirect to upload form
-                                    </Text>
+                                    Double click on the map and it will redirect to upload form
+
                                 </ListItem>
                             </UnorderedList>
                         </ListItem>
                         <ListItem>
-                            <Text>
-                                To update an existing location:
-                            </Text>
-                            <UnorderedList>
+                            To update an existing location:
+
+                            <UnorderedList listStyleType={'circle'}>
                                 <ListItem>
-                                    <Text>
-                                        Click on location Pin and press on 'Edit place info' it will redirect to upload form
-                                    </Text>
+                                    Click on location Pin and press on 'Edit place info' it will redirect to upload form
+
                                 </ListItem>
                             </UnorderedList>
                         </ListItem>
@@ -157,72 +155,59 @@ const HowItWorks = () => {
                         </Text>
                     </Heading>
 
-                    <UnorderedList>
+                    <UnorderedList stylePosition={'inside'}>
                         <ListItem>
-                            <Text>Name of location  </Text>
-                            <UnorderedList>
+                            Name of location
+                            <UnorderedList listStyleType={'circle'}>
                                 <ListItem>
-                                    <Text>
-                                        Fill the field with the name of location
-                                    </Text>
+                                    Fill the field with the name of location
                                 </ListItem>
                             </UnorderedList>
                         </ListItem>
                         <ListItem>
-                            <Text>
-                                Upload images of location (entrance)
-                            </Text>
-                            <UnorderedList>
+                            Upload images of location (entrance)
+
+                            <UnorderedList listStyleType={'circle'}>
                                 <ListItem>
-                                    <Text>
-                                        Each image should not exceed 2MB and have JPG/JPEG format
-                                    </Text>
+                                    Each image should not exceed 2MB and have JPG/JPEG format
+
                                 </ListItem>
                             </UnorderedList>
                         </ListItem>
                         <ListItem>
-                            <Text>
-                                Accessibility predictions
-                            </Text>
-                            <UnorderedList>
+                            Accessibility predictions
+
+                            <UnorderedList listStyleType={'circle'}>
                                 <ListItem>
-                                    <Text>
-                                        Each image will receive a list of predictions whether it contains ramps for wheelchairs
-                                        or not and will draw a bounding box around the predictions
-                                    </Text>
+                                    Each image will receive a list of predictions whether it contains ramps for wheelchairs
+                                    or not and will draw a bounding box around the predictions
                                 </ListItem>
                                 <ListItem>
-                                    <Text>
-                                        If you want to modify bounding boxes from image :
-                                    </Text>
+                                    If you want to modify bounding boxes from image :
+
                                     <OrderedList>
                                         <ListItem>
-                                            <Text>
-                                                Click Edit button
-                                            </Text>
+                                            Click Edit button
+
                                         </ListItem>
                                         <ListItem>
-                                            <Text>
-                                                Click on desired bounding box , you can resize or move the box around the image or if you want to delete it press 'delete' key
-                                            </Text>
+                                            Click on desired bounding box , you can resize or move the box around the image or if you want to delete it press 'delete' key
+
                                         </ListItem>
                                         <ListItem>
-                                            <Text>
-                                                To save the box press 'save' button
-                                            </Text>
+                                            To save the box press 'save' button
+
                                         </ListItem>
                                     </OrderedList>
 
                                 </ListItem>
                                 <ListItem>
-                                    <Text>
-                                        To submit the form , press 'next' and the data will be saved
-                                    </Text>
+                                    To submit the form , press 'next' and the data will be saved
+
                                 </ListItem>
                                 <ListItem>
-                                    <Text>
-                                        Return to the map , location will be added
-                                    </Text>
+                                    Return to the map , location will be added
+
                                 </ListItem>
 
                             </UnorderedList>
