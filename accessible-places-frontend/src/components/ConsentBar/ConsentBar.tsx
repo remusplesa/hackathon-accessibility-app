@@ -64,6 +64,7 @@ export const ConsentBar = () => {
           border="2px"
           borderColor={"#4a9f66"}
           borderRadius={"15px"}
+          zIndex={999}
           backgroundColor="green.900"
         >
           <Box bg="bg-surface" boxShadow={useColorModeValue("sm", "sm-dark")}>
