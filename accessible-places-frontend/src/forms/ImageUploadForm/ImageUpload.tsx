@@ -121,7 +121,7 @@ export function ImageUpload() {
         <FormErrorMessage>
           <>{errors.imageRaw?.message}</>
         </FormErrorMessage>
-        <FormHelperText>*Size of one image must not exceed 2MB</FormHelperText>
+        <FormHelperText>*Size of one image must not exceed 10MB</FormHelperText>
       </FormControl>
 
       <Flex gap="2" paddingY={8} w="100%" justifyContent="space-between">
