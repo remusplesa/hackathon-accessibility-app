@@ -8,12 +8,12 @@ function App() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    console.log('Submitting form!', nameRef.current?.value);
+    alert(`Submitting form! {name: ${nameRef.current?.value}}`);
   }
 
   return (
     <div className="App">
-      <form onSubmit={handleSubmit} style={{width: 400, display: "flex", flexDirection: "column", gap: 16}}>
+      <form onSubmit={handleSubmit} style={{ width: 400, display: "flex", flexDirection: "column", gap: 16 }}>
         <input type={"text"} placeholder="name" ref={nameRef} />
         <CaptchaComponent setIsValid={setIsValid} />
         <button disabled={!isValid} type="submit" >Submit</button>

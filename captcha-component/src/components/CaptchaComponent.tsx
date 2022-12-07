@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Label } from "react-konva";
 import { useCaptcha } from '../hooks/useCaptcha';
+import { LabelImage } from './LabelImage';
 interface Props {
   labelText?: string;
   setIsValid: (e: any) => void;
@@ -27,8 +29,7 @@ export const CaptchaComponent: React.FC<Props> = ({ setIsValid }): JSX.Element =
         "Loading..."
       ) : (
         <div>
-          <pre style={{overflow: "hidden"}}>{JSON.stringify(challenge, null, 2)}</pre>
-          <button type="button" onClick={() => verify()}>ok</button>
+          {challenge && <LabelImage {...challenge} setChallenge={setChallenge} verify={verify}/>}
         </div>
       )}
     </div>
