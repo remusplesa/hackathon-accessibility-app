@@ -16,7 +16,7 @@ class PlaceResolver {
   async getPlaces(
     @Arg('centerLat') centerLat: number,
     @Arg('centerLon') centerLng: number,
-    @Arg('radiusInKM', { nullable: true }) radiusInKM: number = 0.5,
+    @Arg('radiusInKM', { nullable: true }) radiusInKM: number = 5,
     @Arg('mocked', { nullable: true }) mocked: boolean = false
   ): Promise<PlaceResult[]> {
     // 0.01 degrees ~= 1.1km
