@@ -10,7 +10,14 @@ import {
 } from "react-leaflet";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton, Stack } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  CloseButton,
+  Stack,
+} from "@chakra-ui/react";
 
 import { SideDrawer } from "../../components/SideDrawer/SideDrawer";
 import { MyLocationPin } from "../../components/MyLocationPin/MyLocationPin";
@@ -20,17 +27,20 @@ import { usePlaces } from "../../logic/hooks/usePlaces";
 import { Place } from "../../utils/models";
 import "./MapPage.styles.css";
 
-
 const DEFAULT_CENTER: LatLngExpression = [51.505, -0.09];
 
 const MapLocationMarker = ({ onOpen, setCenter }: any) => {
   const map = useMap();
   const [myLocation, setMyLocation] = useState<LatLngExpression>([0, 0]);
+  const navigate = useNavigate();
 
-  const eventMap = useMapEvents({
+  useMapEvents({
     moveend: () => {
       console.log("MAP CENTER MOVED", map.getCenter());
       setCenter(map.getCenter());
+    },
+    dblclick(e) {
+      navigate(`/upload?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
     },
   });
 
@@ -63,17 +73,6 @@ const MapLocationMarker = ({ onOpen, setCenter }: any) => {
   );
 };
 
-const AddNewPlaceHandler = () => {
-  const navigate = useNavigate();
-
-  useMapEvents({
-    dblclick(e) {
-      navigate(`/upload?lat=${e.latlng.lat}&lng=${e.latlng.lng}`)
-    },
-  });
-  return null;
-};
-
 const PlaceMarker = memo(({ place, onOpen, select }: PlaceMarkerProps) => {
   return (
     <>
@@ -104,7 +103,6 @@ export const MapPage = memo(() => {
   const debouncer = useCallback(_.debounce(getPlaces, 100), []);
 
   useEffect(() => {
-    console.log("AICI", center);
     debouncer({
       centerLat: center?.lat || DEFAULT_CENTER[0],
       centerLng: center?.lng || DEFAULT_CENTER[1],
@@ -114,20 +112,23 @@ export const MapPage = memo(() => {
 
   return (
     <>
-      { showGuide && 
-        <Stack
-        position="fixed"
-        bottom={10}
-        opacity={99}
-        zIndex={999}>
-          <Alert status='info' variant='solid' bgColor={"green.200"}  zIndex={999}>
+      {showGuide && (
+        <Stack position="fixed" bottom={10} opacity={99} zIndex={999}>
+          <Alert
+            status="info"
+            variant="solid"
+            bgColor={"green.200"}
+            zIndex={999}
+          >
             <AlertIcon />
             <AlertTitle>Add a new pin on the map</AlertTitle>
-            <AlertDescription>Double Click a spot and follow the process</AlertDescription>
-            <CloseButton paddingLeft={2} onClick={() => setShowGuide(false)}/>
+            <AlertDescription>
+              Double Click a spot and follow the process
+            </AlertDescription>
+            <CloseButton paddingLeft={2} onClick={() => setShowGuide(false)} />
           </Alert>
         </Stack>
-      }
+      )}
       <MapContainer
         center={DEFAULT_CENTER}
         zoom={13}
@@ -149,7 +150,6 @@ export const MapPage = memo(() => {
           />
         ))}
         <MapLocationMarker onOpen={onOpen} setCenter={setCenter} />
-        <AddNewPlaceHandler />
       </MapContainer>
       {selected && <SideDrawer {...selected} />}
     </>

@@ -24,10 +24,11 @@ export const MenuLinks = ({ isOpen }: Props) => {
         <MenuItem to="/map">Map</MenuItem>
         {isLogged && <ProfileAvatar />}
         {!isLogged && (
-          <MenuItem to="/login" isLast>
+          <MenuItem to="/login" isFullWidth>
             <Button
-              size="sm"
-              rounded="md"
+             w={"full"}
+             size={"sm"}
+             rounded="md"
               color={["#4a9f66", "#4a9f66", "white", "white"]}
               bg={["white", "white", "#4a9f66", "#397d50"]}
               _hover={{

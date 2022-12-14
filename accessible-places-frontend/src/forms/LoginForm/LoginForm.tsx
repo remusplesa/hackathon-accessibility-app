@@ -17,7 +17,7 @@ export default function LoginForm({
   isGithubLoginDisabled,
 }: Props) {
   return (
-    <Flex width="full" align="center" justifyContent="center">
+    <Flex width="full" align="center" justifyContent="center" height="full">
       <Box p={2} border="2px solid white" borderRadius={"15px"} padding={"10"}>
         <Box textAlign="center">
           <Heading>Login</Heading>
@@ -32,7 +32,16 @@ export default function LoginForm({
               <FormLabel>Password</FormLabel>
               <Input type="password" placeholder="*******" />
             </FormControl>
-            <Button width="full" mt={4} type="submit">
+            <Button
+              width="full"
+              mt={4}
+              type="submit"
+              color={["#4a9f66", "#4a9f66", "white", "white"]}
+              bg={["white", "white", "#4a9f66", "#397d50"]}
+              _hover={{
+                bg: ["#67e491", "#67e491", "#397d50", "#397d50"],
+              }}
+            >
               Sign In
             </Button>
           </form>
