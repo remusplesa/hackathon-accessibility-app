@@ -11,8 +11,8 @@ export class Place {
   @prop({ required: false })
   poiName?: string;
 
-  @Field()
-  @prop({ required: true })
+  @Field({nullable: true})
+  @prop()
   isAccessible!: boolean;
 
   @Field()
