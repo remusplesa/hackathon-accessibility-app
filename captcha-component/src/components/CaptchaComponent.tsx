@@ -1,59 +1,22 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-
+import { Label } from "react-konva";
+import { useCaptcha } from '../hooks/useCaptcha';
+import { LabelImage } from './LabelImage';
 interface Props {
   labelText?: string;
   setIsValid: (e: any) => void;
 }
 
-const options = {
-  method: "POST",
-  url: "http://localhost:4001/graphql",
-  headers: { "Content-Type": "application/json" },
-  data: {
-    query: `query GetChallenge($mocked: Boolean) {
-               getChallenge(mocked: $mocked){
-                 quizzId
-                 photoUrl
-                 challenge {
-                  id
-                  name
-                  xmin
-                  xmax
-                  ymin
-                  ymax
-                }
-              }
-            }
-            `,
-    variables: { mocked: true },
-    operationName: "GetChallenge",
-  },
-};
 
-export const CaptchaComponent: React.FC<Props> = ({setIsValid}): JSX.Element => {
-  const [isLoading, setIsLoading] = useState(true);
+export const CaptchaComponent: React.FC<Props> = ({ setIsValid }): JSX.Element => {
   const [isOk, setIsOk] = useState(false);
-  const [challenge, setChallenge] = useState<ChallengeResponse>();
+  const { challenge, setChallenge, isLoading, submit } = useCaptcha();
 
-  useEffect(() => {
-    setIsLoading(true);
-    (async () => {
-      const res = await axios(options);
-      if (res.data) {
-        setChallenge(res.data);
-      }
-    })();
-    setIsLoading(false);
-  }, []);
-
-  function verify() {
-    console.log('Verify challenge data')
-    // todo: call the other endpoint
-
-    // todo: check response -> res.data.ok === true ?
-    setIsValid(true);
-    setIsOk(true);
+  async function verify() {
+    const { ok } = await submit();
+    console.log('Verify challenge data', {ok})
+    setIsValid(ok);
+    setIsOk(ok);
   }
 
   if (isOk) {
@@ -61,32 +24,14 @@ export const CaptchaComponent: React.FC<Props> = ({setIsValid}): JSX.Element => 
   }
 
   return (
-    <>
+    <div>
       {isLoading ? (
         "Loading..."
       ) : (
         <div>
-          <pre>{JSON.stringify(challenge, null, 2)}</pre>
-          <button type="button" onClick={() => verify()}>ok</button>
+          {challenge && <LabelImage {...challenge} setChallenge={setChallenge} verify={verify}/>}
         </div>
       )}
-    </>
+    </div>
   );
-};
-
-export interface IPrediction {
-  id: string;
-  name: string;
-  xmin: number;
-  xmax: number;
-  ymin: number;
-  ymax: number;
-}
-
-type ChallengeResponse = {
-  getChallenge: {
-    quizzId: string;
-    photoUrl: string;
-    challenge: IPrediction;
-  };
 };
